@@ -1,5 +1,7 @@
 # Expresses someone's availability for a specific day/time
 class Preference < ApplicationRecord
+  validates_presence_of :preference_type
+
   belongs_to :timeslot
   belongs_to :user
 
