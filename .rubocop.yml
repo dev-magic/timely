@@ -1,0 +1,21 @@
+AllCops:
+  Exclude:
+    - bin/**
+    - app/assets/**/*
+    - app/views/**/*
+    - script/**/*
+    - spec/**/*
+    - public/**/*
+    - config/**/*
+    - db/**/*
+    - doc/**/*
+    - lib/**/*
+    - vendor/**/*
+    - provisioning/**/*
+    - Gemfile
+    - Rakefile
+    - Guardfile
+
+Rails:
+  Enabled: true
+
