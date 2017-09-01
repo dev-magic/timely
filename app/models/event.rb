@@ -1,3 +1,4 @@
+# Event for users to attend
 class Event < ApplicationRecord
   belongs_to :location
 
