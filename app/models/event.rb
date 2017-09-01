@@ -1,8 +1,6 @@
 # Event for users to attend
 class Event < ApplicationRecord
-  validates :name, presence: true
-  validates :time, presence: true
-  validates :duration, presence: true
+  validates_presence_of :name, :time, :duration 
 
   belongs_to :location
   has_many :events_users, dependent: :destroy
