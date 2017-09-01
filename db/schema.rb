@@ -12,23 +12,25 @@
 
 ActiveRecord::Schema.define(version: 20170901034820) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "events", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "time", null: false
     t.integer "duration", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "location_id"
+    t.bigint "location_id"
     t.index ["duration"], name: "index_events_on_duration"
     t.index ["location_id"], name: "index_events_on_location_id"
     t.index ["name"], name: "index_events_on_name"
     t.index ["time"], name: "index_events_on_time"
-    t.index [nil], name: "index_events_on_location"
   end
 
   create_table "events_users", force: :cascade do |t|
-    t.integer "event_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
     t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_events_users_on_event_id"
     t.index ["user_id"], name: "index_events_users_on_user_id"
@@ -44,8 +46,8 @@ ActiveRecord::Schema.define(version: 20170901034820) do
   end
 
   create_table "preferences", force: :cascade do |t|
-    t.integer "timeslot_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "timeslot_id", null: false
+    t.bigint "user_id", null: false
     t.integer "preference_type", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -54,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170901034820) do
   end
 
   create_table "timeslots", force: :cascade do |t|
-    t.integer "event_id", null: false
+    t.bigint "event_id", null: false
     t.datetime "start_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,4 +72,9 @@ ActiveRecord::Schema.define(version: 20170901034820) do
     t.index ["name"], name: "index_users_on_name"
   end
 
+  add_foreign_key "events", "locations"
+  add_foreign_key "events_users", "events"
+  add_foreign_key "events_users", "users"
+  add_foreign_key "preferences", "timeslots"
+  add_foreign_key "timeslots", "events"
 end
