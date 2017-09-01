@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Timeslot, type: :model do
-  let!(:event) { Event.create(name: "dev magic", time: DateTime.now, duration_minutes: 5)}
+  let!(:location) { Location.create(name: "dev magic", address: "555 Drury lane" ) }
+  let!(:event) { Event.create(name: "dev magic", time: DateTime.now, duration_minutes: 30, location_id: location.id)}
 
   subject {
-    described_class.new(start_time: DateTime.now, event_id: 1)
+    described_class.new(start_time: DateTime.now, event_id: event.id)
   } 
 
   it "is valid with valid attributes" do
@@ -13,11 +14,6 @@ RSpec.describe Timeslot, type: :model do
 
   it "is invalid without a start_time" do
     subject.start_time = nil
-    expect(subject).to_not be_valid
-  end
-
-  it "is invalid without an event" do
-    subject.event_id = nil
     expect(subject).to_not be_valid
   end
 
