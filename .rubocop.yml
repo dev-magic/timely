@@ -19,3 +19,11 @@ AllCops:
 Rails:
   Enabled: true
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
