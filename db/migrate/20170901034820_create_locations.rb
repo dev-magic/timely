@@ -8,7 +8,6 @@ class CreateLocations < ActiveRecord::Migration[5.1]
     add_index :locations, :name, unique: true
     add_index :locations, :address, unique: true
 
-    add_reference :events, :location, foreign_key: true
-    add_index :events, :location
+    add_reference :events, :location, foreign_key: true, index: true
   end
 end
