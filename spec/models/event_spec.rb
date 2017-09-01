@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Event, type: :model do
 
   subject {
-    described_class.new(name: "dev magic", time: DateTime.now, duration: 5)
+    described_class.new(name: "dev magic", time: DateTime.now, duration_minutes: 5)
   } 
 
   it "is valid with valid attributes" do
@@ -21,7 +21,7 @@ RSpec.describe Event, type: :model do
   end
 
   it "is invalid without a duration" do
-    subject.duration = nil
+    subject.duration_minutes = nil
     expect(subject).to_not be_valid
   end
 

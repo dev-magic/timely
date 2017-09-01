@@ -23,5 +23,4 @@ RSpec.describe User, type: :model do
     it { should have_many(:events_users) }
     it { should have_many(:events) }
   end
- 
 end

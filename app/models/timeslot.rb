@@ -1,6 +1,7 @@
 # A potential time for an event
 class Timeslot < ApplicationRecord
-  validates_presence_of :start_time
+  validates :event_id, presence: true
+  validates :start_time, presence: true
 
   belongs_to :event
   has_many :preferences, through: :event, class_name: "Event"
