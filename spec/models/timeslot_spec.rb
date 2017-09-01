@@ -21,11 +21,6 @@ RSpec.describe Timeslot, type: :model do
     expect(subject).to_not be_valid
   end
 
-  it "is invalid without a start_time" do
-    subject.start_time = nil
-    expect(subject).to_not be_valid
-  end
-
   describe "Associations" do
     it { should belong_to(:event) }
     it { should have_many(:preferences) }
