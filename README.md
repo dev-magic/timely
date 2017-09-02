@@ -8,7 +8,7 @@
 
 `bundle && yarn`
 
-`foreman start`
+`rails s`
 
 point browser to localhost:5000
 
