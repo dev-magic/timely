@@ -260,7 +260,6 @@ DEPENDENCIES
   capybara (~> 2.13)
   database_cleaner
   factory_girl_rails
-  foreman
   guard-rspec
   haml
   haml-rails

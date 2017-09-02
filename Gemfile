@@ -46,7 +46,6 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'rspec-rails'
   gem 'guard-rspec', require: false
-  gem 'foreman'
   gem 'factory_girl_rails'
   gem 'shoulda'
   gem 'database_cleaner'
