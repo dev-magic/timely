@@ -7,15 +7,17 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import Event from 'components/event'
-import '../styles/application'
-
 // import all components here
 // import <Component> from 'components/component'
+import Event from 'components/event'
+import Nav from 'components/nav'
+import '../styles/application'
 
 import WebpackerReact from 'webpacker-react'
 
-WebpackerReact.setup({ Event })
-
 // setup all components here
 // WebpackerReact.setup({ Component })
+WebpackerReact.setup({
+  Event,
+  Nav
+})
