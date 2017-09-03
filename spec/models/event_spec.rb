@@ -16,9 +16,9 @@ RSpec.describe Event, type: :model do
     expect(subject).to_not be_valid
   end
 
-  it "is invalid without a time" do
+  it "is valid without a time" do
     subject.time = nil
-    expect(subject).to_not be_valid
+    expect(subject).to be_valid
   end
 
   it "is invalid without a duration" do
