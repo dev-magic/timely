@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20170901053411) do
   end
 
   create_table "events_users", force: :cascade do |t|
-    t.bigint "event_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "event_id", null: false
+    t.integer "user_id", null: false
     t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_events_users_on_event_id"
     t.index ["user_id"], name: "index_events_users_on_user_id"
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(version: 20170901053411) do
   end
 
   create_table "preferences", force: :cascade do |t|
-    t.bigint "timeslot_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "timeslot_id", null: false
+    t.integer "user_id", null: false
     t.integer "preference_type", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170901053411) do
   end
 
   create_table "timeslots", force: :cascade do |t|
-    t.bigint "event_id", null: false
+    t.integer "event_id", null: false
     t.datetime "start_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -73,8 +73,4 @@ ActiveRecord::Schema.define(version: 20170901053411) do
   end
 
   add_foreign_key "events", "locations"
-  add_foreign_key "events_users", "events"
-  add_foreign_key "events_users", "users"
-  add_foreign_key "preferences", "timeslots"
-  add_foreign_key "timeslots", "events"
 end
