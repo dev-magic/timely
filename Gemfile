@@ -48,7 +48,7 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'factory_girl_rails'
   gem 'shoulda'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.6.1'
 end
 
 group :development do
