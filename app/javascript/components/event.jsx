@@ -24,11 +24,15 @@ const Event = ({event, users, timeslots}) => {
                     .map(timeslot =>
                       <Row key={timeslot.id} timeslot={timeslot} users={users} />
           )}
-          <tr>
-            <td><a href='/new'>Add a new time</a></td>
-          </tr>
         </tbody>
       </table>
+      <form action='/new'>
+        <input
+          className='new-timeslot btn'
+          type='submit'
+          value='Add New Timeslot'
+        />
+      </form>
     </div>
   )
 }

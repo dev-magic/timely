@@ -5,14 +5,16 @@
     = csrf_meta_tags
 
     %link{ rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css?family=Freckle+Face|Varela" }
+      href: "https://fonts.googleapis.com/css?family=Freckle+Face|Varela|Bree+Serif" }
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application'
+
     %script
-      document.addEventListener('turbolinks:before-cache',
-      () => WebpackerReact.unmountComponents())
+      document.addEventListener('turbolinks:before-cache', () =>
+      WebpackerReact.unmountComponents())
+
 
   %body
     .container

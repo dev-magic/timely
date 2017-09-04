@@ -9,10 +9,10 @@ const Nav = () =>
     <div className='spacer' />
 
     <div className='auth-bar'>
-      <button>
+      <button className='btn'>
         Sign Up
       </button>
-      <button>
+      <button className='btn'>
         Sign In
       </button>
     </div>
