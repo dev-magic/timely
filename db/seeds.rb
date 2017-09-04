@@ -36,21 +36,21 @@ NUM_EVENTS.times do
     location_id: LOCATIONS.sample.id
   })
 
-  indices = []
-
-  (6 * USERS_PER_EVENT).times do
-    indices << rand(NUM_USERS - 1)
-  end
-
-  all_users = User.all
-  event_users = indices.uniq[0...USERS_PER_EVENT].map { |index| all_users[index] }
-
-  event_users.each do |user|
-    EventsUser.create!({
-      event_id: event.id,
-      user_id: user.id
-    })
-  end
+  # indices = []
+  #
+  # (6 * USERS_PER_EVENT).times do
+  #   indices << rand(NUM_USERS - 1)
+  # end
+  #
+  # all_users = User.all
+  # event_users = indices.uniq[0...USERS_PER_EVENT].map { |index| all_users[index] }
+  #
+  # event_users.each do |user|
+  #   EventsUser.create!({
+  #     event_id: event.id,
+  #     user_id: user.id
+  #   })
+  # end
 
   TIMESLOTS_PER_EVENT.times do
     timeslot = Timeslot.create!({
@@ -58,7 +58,7 @@ NUM_EVENTS.times do
       start_time: Faker::Time.forward(30)
     })
 
-    event_users.each do |user|
+    event.users.each do |user|
       Preference.create!({
         timeslot_id: timeslot.id,
         user_id: user.id,

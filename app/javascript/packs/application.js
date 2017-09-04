@@ -9,9 +9,11 @@
 
 // import all components here
 // import <Component> from 'components/component'
+
 import Nav from 'components/Nav'
 import Events from 'components/Events'
 import Event from 'components/Event'
+import EventNew from 'components/EventNew'
 
 import 'font-awesome/scss/font-awesome.scss'
 import '../styles/application'
@@ -23,5 +25,6 @@ import WebpackerReact from 'webpacker-react'
 WebpackerReact.setup({
   Nav,
   Events,
-  Event
+  Event,
+  EventNew
 })
