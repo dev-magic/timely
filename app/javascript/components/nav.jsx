@@ -7,7 +7,7 @@ const Nav = (props) =>
       <a href='/'>Let's Meet Up!</a>
     </div>
 
-    <div className='spacer'></div>
+    <div className='spacer' />
 
     <div className='auth-bar'>
       <button>
@@ -18,6 +18,5 @@ const Nav = (props) =>
       </button>
     </div>
   </nav>
-
 
 export default Nav

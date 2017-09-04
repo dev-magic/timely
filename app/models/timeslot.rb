@@ -3,5 +3,5 @@ class Timeslot < ApplicationRecord
   validates :start_time, presence: true
 
   belongs_to :event
-  has_many :preferences, through: :event, class_name: 'Event'
+  has_many :preferences
 end
