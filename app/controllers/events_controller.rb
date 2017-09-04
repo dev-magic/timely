@@ -7,10 +7,10 @@ class EventsController < ApplicationController
     end
 
     render react_component: 'Events',
-      props: {
-        events:    @events,
-        locations: @locations
-      }
+           props: {
+             events:    @events,
+             locations: @locations
+           }
   end
 
   def show
@@ -20,11 +20,11 @@ class EventsController < ApplicationController
     @location = Location.find(@event.location_id)
 
     render react_component: 'Event',
-      props: {
-        event:     @event,
-        location:  @location,
-        timeslots: @timeslots,
-        users:     @users
-      }
+           props: {
+             event:     @event,
+             location:  @location,
+             timeslots: @timeslots,
+             users:     @users
+           }
   end
 end
