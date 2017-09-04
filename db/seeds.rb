@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 NUM_USERS = 15
+NUM_LOCATIONS = 10
 NUM_EVENTS = 15
 TIMESLOTS_PER_EVENT = 10
 USERS_PER_EVENT = 5
@@ -18,16 +19,20 @@ NUM_USERS.times do
   })
 end
 
-NUM_EVENTS.times do
-  location = Location.create!({
-    name: Faker::Company.unique.name,
+NUM_LOCATIONS.times do
+  Location.create!({
+    name: Faker::Address.unique.community,
     address: Faker::Address.unique.street_address
   })
+end
 
+LOCATIONS = Location.all
+
+NUM_EVENTS.times do
   event = Event.create!({
-    name: Faker::GameOfThrones.unique.dragon,
+    name: Faker::Pokemon.unique.name,
     duration_minutes: rand(300),
-    location_id: location.id
+    location_id: LOCATIONS.sample.id
   })
 
   indices = []
