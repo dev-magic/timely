@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const Nav = (props) =>
+const Nav = () =>
   <nav>
     <div className='logo'>
       <a href='/'>Let's Meet Up!</a>

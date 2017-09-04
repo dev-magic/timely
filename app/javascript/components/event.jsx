@@ -20,8 +20,9 @@ const Event = ({event, users, timeslots}) => {
           </tr>
         </thead>
         <tbody>
-          {timeslots.map(timeslot =>
-            <Row key={timeslot.id} timeslot={timeslot} users={users} />
+          {timeslots.sort((a, b) => a.start_time - b.start_time)
+                    .map(timeslot =>
+                      <Row key={timeslot.id} timeslot={timeslot} users={users} />
           )}
           <tr>
             <td><a href='/new'>Add a new time</a></td>
