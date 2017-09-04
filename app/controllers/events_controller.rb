@@ -1,7 +1,9 @@
 class EventsController < ApplicationController
+  JSONResource = ActiveModelSerializers::SerializableResource
+
   def index
     events = Event.includes(:location)
-    events_json = ActiveModelSerializers::SerializableResource.new(events).as_json
+    events_json = JSONResource.new(events).as_json
     render react_component: 'Events',
            props: {
              events:    events_json
@@ -9,10 +11,11 @@ class EventsController < ApplicationController
   end
 
   def show
-    event = Event.includes(:users, timeslots: [{ preferences: :user }]).find(params[:id])
-    event_json = ActiveModelSerializers::SerializableResource.new(event, serializer: EventShowSerializer).as_json
-    timeslots_json = ActiveModelSerializers::SerializableResource.new(event.timeslots).as_json
-    users_json = ActiveModelSerializers::SerializableResource.new(event.users).as_json
+    event = Event.includes(:users, timeslots: [{ preferences: :user }])
+                 .find(params[:id])
+    event_json = JSONResource.new(event, serializer: EventShowSerializer).as_json
+    timeslots_json = JSONResource.new(event.timeslots).as_json
+    users_json = JSONResource.new(event.users).as_json
     render react_component: 'Event',
            props: {
              event:     event_json,
