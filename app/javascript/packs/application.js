@@ -9,8 +9,9 @@
 
 // import all components here
 // import <Component> from 'components/component'
-import Event from 'components/event'
 import Nav from 'components/nav'
+import Events from 'components/events'
+import Event from 'components/event'
 import '../styles/application'
 
 import WebpackerReact from 'webpacker-react'
@@ -18,6 +19,7 @@ import WebpackerReact from 'webpacker-react'
 // setup all components here
 // WebpackerReact.setup({ Component })
 WebpackerReact.setup({
-  Event,
-  Nav
+  Nav,
+  Events,
+  Event
 })
