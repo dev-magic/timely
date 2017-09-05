@@ -26,3 +26,6 @@
 /**/.DS_Store
 /public/packs-test
 .idea/
+/public/packs
+/public/packs-test
+/node_modules
