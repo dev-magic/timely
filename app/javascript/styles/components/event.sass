@@ -1,0 +1,43 @@
+.event-container
+  display: flex
+  flex-direction: column
+  justify-content: center
+  margin-top: 25px
+
+.user
+  padding: 10px
+  width: 15%
+
+.table
+  width: 80%
+
+td, th
+  min-height: 40px
+  min-width: 170px
+  outline: solid black 1px
+  padding: 0
+  p
+    margin: 10px
+
+.new-timeslot
+  background: $color--main
+  box-shadow: 0 0 8px $color--hilite inset
+  color: white
+  float: left
+  text-shadow: 1px 1px 3px $color--lolite
+  @include hover-change($color--main)
+
+.not_filled_in
+  background: white
+
+.available
+  background: green
+
+.tentative
+  background: yellow
+
+.not_available
+  background: red
+
+.preferred
+  background: blue

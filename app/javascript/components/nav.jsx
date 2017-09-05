@@ -1,23 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const Nav = (props) =>
+const Nav = () =>
   <nav>
     <div className='logo'>
       <a href='/'>Let's Meet Up!</a>
     </div>
 
-    <div className='spacer'></div>
+    <div className='spacer' />
 
     <div className='auth-bar'>
-      <button>
+      <button className='btn'>
         Sign Up
       </button>
-      <button>
+      <button className='btn'>
         Sign In
       </button>
     </div>
   </nav>
-
 
 export default Nav

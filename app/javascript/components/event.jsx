@@ -2,46 +2,50 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Row from './timeslot_row'
 
-class Event extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    const rows = []
-
-    this.props.timeslots.forEach( timeslot => {
-      rows.push(<Row {...timeslot} key={timeslot.id} />)
-    })
-
-    return (
-      <div className='main'>
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th className='user'>Fiona</th>
-              <th className='user'>Gabriel</th>
-              <th className='user'>Jeremy</th>
-              <th className='user'>Kevin</th>
-              <th className='user'>Kyle</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows}
-            <tr>
-              <td><a href='/new'>Add a new time</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+const Event = ({event, users, timeslots}) => {
+  return (
+    <div className='event-container'>
+      <div className='event__header'>
+        <h1>{event.name}</h1>
+        <h3>{event.location}</h3>
       </div>
-    )
-  }
+      <table>
+        <thead>
+          <tr>
+            <th />
+            {users.sort((a, b) => b.id - a.id)
+                  .map(user =>
+                    <th key={user.id} className='user'>{user.name}</th>
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {timeslots.sort((a, b) => a.start_time - b.start_time)
+                    .map(timeslot =>
+                      <Row
+                        key={timeslot.id}
+                        timeslot={timeslot}
+                        users={users}
+                        duration={event.duration_minutes}
+                      />
+          )}
+        </tbody>
+      </table>
+      <form action='/new'>
+        <input
+          className='new-timeslot btn'
+          type='submit'
+          value='Add New Timeslot'
+        />
+      </form>
+    </div>
+  )
+}
+
+Event.propTypes = {
+  event: PropTypes.object.isRequired,
+  timeslots: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired
 }
 
 export default Event

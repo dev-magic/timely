@@ -1,5 +1,5 @@
 *
-  font-family: $font-family--main
+  font-family: $font-family--sans-serif
   text-align: center
   vertical-align: center
 
@@ -19,46 +19,9 @@ a
 .spacer
   flex-grow: 10
 
-td, th
-  outline: solid black 1px
-  padding: 10px
-  width: 170px
-  height: 40px
-
-.user
-  width: 15%
-  padding: 10px
-
-.main
-  display: flex
-  justify-content: center
-  margin-top: 100px
-
 button
   background: $color--hilite
-  border: none
-  border-radius: 10px
   box-shadow: 0 0 5px $color--lolite, 0 0 10px $color--main inset
   color: white
-  margin: 10px
-  padding: 15px 20px
   text-shadow: 1px 1px 3px $color--lolite
   @include hover-change($color--hilite)
-
-.table
-  width: 80%
-
-.white
-  background-color: white
-
-.green
-  background-color: green
-
-.yellow
-  background-color: yellow
-
-.red
-  background-color: red
-
-.blue
-  background-color: blue

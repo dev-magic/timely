@@ -1,46 +1,21 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { formatTimeslot } from '../utils/dateFormat'
 
-class TimeSlotRow extends React.Component {
-  constructor(props) {
-    super(props)
+const TimeSlotRow = ({timeslot, duration}) => {
+  return (
+    <tr>
+      <td>{formatTimeslot(timeslot.start_time, duration)}</td>
+      {timeslot.preferences.sort((a, b) => b.user_id - a.user_id)
+                           .map(preference =>
+                             <td className={preference.preference_type} key={preference.id} />
+      )}
+    </tr>
+  )
+}
 
-    this.state = {
-      fiona: props.fiona,
-      gabriel: props.gabriel,
-      jeremy: props.jeremy,
-      kevin: props.kevin,
-      kyle: props.kyle
-    }
-
-    this.toggleColor = this.toggleColor.bind(this)
-  }
-
-  toggleColor(name) {
-    const colors = {
-      white: 'green',
-      green: 'yellow',
-      yellow: 'red',
-      red: 'blue',
-      blue: 'white',
-    }
-
-    this.setState({ [name]: colors[this.state[name]] })
-  }
-
-  render() {
-      return (
-        <tr>
-           <td>{ this.props.time }</td>
-           <td className={ this.state.fiona } onClick={() => this.toggleColor('fiona')}></td>
-           <td className={ this.state.gabriel } onClick={() => this.toggleColor('gabriel') }></td>
-           <td className={ this.state.jeremy } onClick={() => this.toggleColor('jeremy') }></td>
-           <td className={ this.state.kevin } onClick={() => this.toggleColor('kevin') }></td>
-           <td className={ this.state.kyle } onClick={() => this.toggleColor('kyle') }></td>
-        </tr>
-      )
-  }
+TimeSlotRow.propTypes = {
+  timeslot: PropTypes.object.isRequired
 }
 
 export default TimeSlotRow
