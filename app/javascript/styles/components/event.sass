@@ -5,17 +5,19 @@
   margin-top: 25px
 
 .user
-  width: 15%
   padding: 10px
+  width: 15%
 
 .table
   width: 80%
 
 td, th
+  min-height: 40px
+  min-width: 170px
   outline: solid black 1px
-  padding: 10px
-  width: 170px
-  height: 40px
+  padding: 0
+  p
+    margin: 10px
 
 .new-timeslot
   background: $color--main
@@ -26,16 +28,16 @@ td, th
   @include hover-change($color--main)
 
 .not_filled_in
-  background-color: white
+  background: white
 
 .available
-  background-color: green
+  background: green
 
 .tentative
-  background-color: yellow
+  background: yellow
 
 .not_available
-  background-color: red
+  background: red
 
 .preferred
-  background-color: blue
+  background: blue

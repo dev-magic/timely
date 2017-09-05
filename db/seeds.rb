@@ -61,7 +61,7 @@ NUM_EVENTS.times do
       Preference.create!({
         timeslot_id: timeslot.id,
         user_id: user.id,
-        preference_type: rand(4)
+        preference_type: rand(5)
       })
     end
   end

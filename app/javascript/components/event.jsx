@@ -22,7 +22,12 @@ const Event = ({event, users, timeslots}) => {
         <tbody>
           {timeslots.sort((a, b) => a.start_time - b.start_time)
                     .map(timeslot =>
-                      <Row key={timeslot.id} timeslot={timeslot} users={users} />
+                      <Row
+                        key={timeslot.id}
+                        timeslot={timeslot}
+                        users={users}
+                        duration={event.duration_minutes}
+                      />
           )}
         </tbody>
       </table>

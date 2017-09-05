@@ -1,15 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { format } from 'date-fns'
+import { formatTimeslot } from '../utils/dateFormat'
 
-const formatTime = (timeInMs) => (
-  format(new Date(timeInMs * 1000), ['YYYY-MM-DD HH:mm'])
-)
-
-const TimeSlotRow = ({timeslot}) => {
+const TimeSlotRow = ({timeslot, duration}) => {
   return (
     <tr>
-      <td>{formatTime(timeslot.start_time)}</td>
+      <td>{formatTimeslot(timeslot.start_time, duration)}</td>
       {timeslot.preferences.sort((a, b) => b.user_id - a.user_id)
                            .map(preference =>
                              <td className={preference.preference_type} key={preference.id} />
