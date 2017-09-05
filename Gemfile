@@ -49,6 +49,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda'
   gem 'database_cleaner', '~> 1.6.1'
+  gem 'faker'
 end
 
 group :development do
