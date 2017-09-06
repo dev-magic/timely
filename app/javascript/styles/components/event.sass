@@ -28,6 +28,22 @@ td, th
   width: fit-content
   @include hover-change($color--main)
 
+.timeslot__date
+  align-items: center
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+  margin-left: 12%
+
+.timeslot__delete-icon
+  border-radius: 5px
+  color: $color--graphite
+  margin-right: 25px
+  padding: 10px
+  &:hover
+    background: rgba(black, 0.1)
+    cursor: pointer
+
 .not_filled_in
   background: white
 

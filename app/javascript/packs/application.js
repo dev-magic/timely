@@ -12,6 +12,8 @@
 import Nav from 'components/Nav'
 import Events from 'components/Events'
 import Event from 'components/Event'
+
+import 'font-awesome/scss/font-awesome.scss'
 import '../styles/application'
 
 import WebpackerReact from 'webpacker-react'

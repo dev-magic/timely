@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   root :to => "events#index"
 
   resources :events, only: [:index, :show] do
-    resources :timeslots, only: [:create]
+    resources :timeslots, only: [:create, :destroy]
   end
 end

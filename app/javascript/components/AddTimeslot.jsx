@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 
 class AddTimeslot extends Component {
   constructor(props) {
@@ -8,42 +7,15 @@ class AddTimeslot extends Component {
 
     this.state = {
       eventId: props.eventId,
-      startTime: '',
-      saving: false,
-      error: false,
-      authToken: props.authToken
+      startTime: ''
     }
 
     this.closeModal = props.closeModal
     this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(e) {
     this.setState({ startTime: e.target.value })
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    this.setState({ saving: true })
-
-    axios({
-      method: 'post',
-      url: `/events/${this.state.eventId}/timeslots`,
-      headers: {
-        'X-CSRF-Token': this.state.authToken
-      },
-      data: {
-        start_time: this.state.startTime,
-      }
-    })
-      .then( () => {
-        this.closeModal()
-      })
-      .catch(error => {
-        this.setState({ saving: false, error: true })
-        console.error(error)
-      })
   }
 
   render() {
@@ -52,13 +24,18 @@ class AddTimeslot extends Component {
     return (
       <div className='modal__background' onClick={ closeModal }>
         <div className='modal__dialogue' onClick={(e) => e.stopPropagation()}>
-          <div className='modal__header'>
+          <div className='modal__header info-header'>
             Add New Timeslot
           </div>
           <div className='modal__body'>
             { this.state.saving
               ? <div className='loader' /> :
-            <form onSubmit={ this.handleSubmit } >
+            <form action={`/events/${eventId}/timeslots`} method='POST'>
+              <input
+                type='hidden'
+                name='authenticity_token'
+                value={ authToken }
+              />
               <input
                 type='datetime-local'
                 name='start_time'

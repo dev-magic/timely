@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Events = ({events}) =>
   <div>
-    <h1 className='events__header'>Upcoming Events</h1>
+    <h1 className='text--header'>Upcoming Events</h1>
 
     <div className='events-container'>
       {events.map((event) =>

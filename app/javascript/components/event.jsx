@@ -2,25 +2,36 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Row from './TimeslotRow'
 import AddTimeslot from './AddTimeslot'
+import ConfirmDelete from './ConfirmDelete'
 
 class Event extends Component {
   constructor(props) {
     super(props)
 
-    const {event, users, timeslots} = props
-
     this.state = {
       showModal: false,
-      event,
-      users,
-      timeslots
+      confirm: false,
     }
 
     this.toggleModal = this.toggleModal.bind(this)
+    this.deleteTimeslot = this.deleteTimeslot.bind(this)
   }
 
   toggleModal() {
-    this.setState({showModal: !this.state.showModal})
+    this.setState({
+      showModal: !this.state.showModal,
+      confirm: false
+    })
+
+    document.getElementsByTagName('body')[0].classList.toggle('modal-open')
+  }
+
+  deleteTimeslot(timeslotId) {
+    this.setState({
+      showModal: true,
+      confirm: timeslotId
+    })
+
     document.getElementsByTagName('body')[0].classList.toggle('modal-open')
   }
 
@@ -30,7 +41,7 @@ class Event extends Component {
     return (
       <div className='event-container'>
         <div className='event__header'>
-          <h1>{event.name}</h1>
+          <h1 className='text--header'>{event.name}</h1>
           <h3>{event.location}</h3>
         </div>
         <table>
@@ -51,6 +62,7 @@ class Event extends Component {
                           timeslot={timeslot}
                           users={users}
                           duration={event.duration_minutes}
+                          deleteTimeslot={this.deleteTimeslot}
                         />
             )}
           </tbody>
@@ -63,6 +75,13 @@ class Event extends Component {
         </button>
 
         { this.state.showModal ?
+          this.state.confirm ?
+          <ConfirmDelete
+            eventId={event.id}
+            timeslotId={this.state.confirm}
+            authToken={authToken}
+            closeModal={this.toggleModal}
+          /> :
           <AddTimeslot
             eventId={event.id}
             closeModal={this.toggleModal}

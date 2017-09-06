@@ -20,9 +20,19 @@
   text-shadow: 1px 1px lighten($color--warning, 10%)
   @include hover-change($color--warning)
 
-
 .modal-open
   overflow: hidden
+
+.text--header
+  font-family: $font-family--serif
+  color: $color--graphite
+  text-shadow: 2px 2px 8px $color--silver-chalice
+
+.warning-header
+  background: darken($color--warning, 20%)
+
+.info-header
+  background: $color--main
 
 .loader
     animation: spin 2s linear infinite
