@@ -6,7 +6,8 @@ class EventsController < ApplicationController
     events_json = JSONResource.new(events).as_json
     render react_component: 'Events',
            props: {
-             events: events_json
+             events: events_json,
+             authToken: form_authenticity_token
            }
   end
 
@@ -20,7 +21,8 @@ class EventsController < ApplicationController
            props: {
              event:     event_json,
              timeslots: timeslots_json,
-             users:     users_json
+             users:     users_json,
+             authToken: form_authenticity_token
            }
   end
 end

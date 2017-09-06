@@ -5,3 +5,35 @@
   padding: 15px 20px
   &:hover
     cursor: pointer
+
+.btn--confirm
+  background: $color--confirm
+  box-shadow: 2px 2px 2px $color--silver-chalice, 0 0 20px darken($color--confirm, 20%) inset
+  color: $color--graphite
+  text-shadow: 1px 1px lighten($color--confirm, 10%)
+  @include hover-change($color--confirm)
+
+.btn--cancel
+  background: $color--warning
+  box-shadow: 2px 2px 2px $color--silver-chalice, 0 0 20px darken($color--warning, 20%) inset
+  color: $color--graphite
+  text-shadow: 1px 1px lighten($color--warning, 10%)
+  @include hover-change($color--warning)
+
+
+.modal-open
+  overflow: hidden
+
+.loader
+    animation: spin 2s linear infinite
+    border: 16px solid $color--silver-chalice
+    border-bottom: 16px solid $color--main
+    border-radius: 50%
+    border-top: 16px solid $color--main
+    height: 44px
+    margin: 20px
+    width: 44px
+
+@keyframes spin
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
