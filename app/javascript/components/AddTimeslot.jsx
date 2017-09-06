@@ -16,7 +16,6 @@ class AddTimeslot extends Component {
     }
 
     axios.defaults.headers.common['X-CSRF-Token'] = props.authToken
-    axios.defaults.headers.common['Accept'] = 'application/json'
     this.closeModal = props.closeModal
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -48,14 +47,14 @@ class AddTimeslot extends Component {
         console.error(err)
         this.setState({
           saving: false,
-          error: true
+          error: 'An error occurred. Please try again'
         })
       })
     }
   }
 
   render() {
-    const { eventId, closeModal, authToken } = this.props
+    const { eventId, closeModal } = this.props
 
     return (
       <div className='modal__background' onClick={ closeModal }>
