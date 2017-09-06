@@ -85,6 +85,7 @@ class Event extends Component {
           <AddTimeslot
             eventId={event.id}
             closeModal={this.toggleModal}
+            timeslots={timeslots.map(timeslot => timeslot.start_time)}
             authToken={authToken}
           /> : ''
         }

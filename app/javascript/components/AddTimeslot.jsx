@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { dateToSeconds } from '../utils/dateFormat'
+import axios from 'axios'
 
 class AddTimeslot extends Component {
   constructor(props) {
@@ -7,15 +9,49 @@ class AddTimeslot extends Component {
 
     this.state = {
       eventId: props.eventId,
-      startTime: ''
+      startTime: '',
+      timeslots: props.timeslots,
+      saving: false,
+      error: false
     }
 
+    axios.defaults.headers.common['X-CSRF-Token'] = props.authToken
+    axios.defaults.headers.common['Accept'] = 'application/json'
     this.closeModal = props.closeModal
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(e) {
     this.setState({ startTime: e.target.value })
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const startTime = this.state.startTime
+    const  normalizedStart = dateToSeconds(startTime)
+
+    if (startTime == '')
+      return this.setState({ error: 'Please fill out the time completely.' })
+    else if (this.state.timeslots.includes(normalizedStart))
+      return this.setState({ error: 'A timeslot already exists at that time.' })
+    else {
+      this.setState({ saving: true })
+
+      axios.post(`/events/${this.state.eventId}/timeslots`, {
+        start_time: this.state.startTime
+      })
+      .then(result => {
+        window.location.reload(true)
+      })
+      .catch(err => {
+        console.error(err)
+        this.setState({
+          saving: false,
+          error: true
+        })
+      })
+    }
   }
 
   render() {
@@ -30,12 +66,7 @@ class AddTimeslot extends Component {
           <div className='modal__body'>
             { this.state.saving
               ? <div className='loader' /> :
-            <form action={`/events/${eventId}/timeslots`} method='POST'>
-              <input
-                type='hidden'
-                name='authenticity_token'
-                value={ authToken }
-              />
+            <form onSubmit={this.handleSubmit}>
               <input
                 type='datetime-local'
                 name='start_time'
@@ -45,7 +76,7 @@ class AddTimeslot extends Component {
               />
               { this.state.error ?
               <div className='error-msg'>
-                There was an error. Please try again.
+                { this.state.error }
               </div> : ''
               }
               <div className='confirmation-bar'>
@@ -73,6 +104,7 @@ class AddTimeslot extends Component {
 AddTimeslot.propTypes = {
   eventId: PropTypes.number.isRequired,
   closeModal: PropTypes.func.isRequired,
+  timeslots: PropTypes.array.isRequired,
   authToken: PropTypes.string.isRequired
 }
 
