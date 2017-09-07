@@ -39,7 +39,7 @@ class Event extends Component {
   }
 
   refreshEvent () {
-    getEvent(this.state.event.id)
+    getEvent(this.state.event.slug)
     .then(result => {
       this.setState({ ...result.data })
     })

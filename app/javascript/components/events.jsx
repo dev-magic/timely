@@ -8,7 +8,7 @@ const Events = ({events}) =>
     <div className='events-container'>
       {events.map((event) =>
         <a
-          href={'/events/' + event.id}
+          href={'/events/' + event.slug}
           key={event.id}
           className='event-card'
         >

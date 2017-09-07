@@ -13,7 +13,7 @@ class EventsController < ApplicationController
 
   def show
     event = Event.includes(:users, timeslots: [{ preferences: :user }])
-                 .find(params[:id])
+                 .find_by_slug(params[:id])
     event_json = JSONResource.new(event, serializer: EventShowSerializer).as_json
     timeslots_json = JSONResource.new(event.timeslots).as_json
     users_json = JSONResource.new(event.users).as_json
