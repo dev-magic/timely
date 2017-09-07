@@ -34,6 +34,8 @@ class AddTimeslot extends Component {
       return this.setState({ error: 'Please fill out the time completely.' })
     else if (this.state.timeslots.includes(normalizedStart))
       return this.setState({ error: 'A timeslot already exists at that time.' })
+    else if (new Date(startTime) < Date.now())
+      return this.setState({ error: 'Timeslot must be in the future.' })
     else {
       this.setState({ saving: true })
 
@@ -65,7 +67,7 @@ class AddTimeslot extends Component {
           <div className='modal__body'>
             { this.state.saving
               ? <div className='loader' /> :
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} noValidate >
               <input
                 type='datetime-local'
                 name='start_time'
