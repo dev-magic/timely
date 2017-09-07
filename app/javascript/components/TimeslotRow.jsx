@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { formatTimeslot } from '../utils/dateFormat'
 
-const TimeSlotRow = ({ timeslot, duration, deleteTimeslot }) => {
+const TimeSlotRow = ({ timeslot, duration, confirmModal }) => {
   return (
     <tr>
       <td>
         <div className='timeslot__date'>
           <i
             className='fa fa-trash fa-lg timeslot__delete-icon'
-            onClick={() => deleteTimeslot(timeslot.id)}
+            onClick={() => confirmModal(timeslot.id)}
           />
           {formatTimeslot(timeslot.start_time, duration)}
         </div>
@@ -23,9 +23,9 @@ const TimeSlotRow = ({ timeslot, duration, deleteTimeslot }) => {
 }
 
 TimeSlotRow.propTypes = {
-  timeslot: PropTypes.object.isRequired,
+  confirmModal: PropTypes.func.isRequired,
   duration: PropTypes.number.isRequired,
-  deleteTimeslot: PropTypes.func.isRequired
+  timeslot: PropTypes.object.isRequired
 }
 
 export default TimeSlotRow

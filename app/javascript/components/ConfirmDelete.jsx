@@ -38,10 +38,10 @@ class ConfirmDelete extends Component {
 
   render () {
     const {
-     eventId,
-     timeslotId,
      authToken,
-     closeModal
+     closeModal,
+     eventId,
+     timeslotId
    } = this.props
 
     return (
@@ -67,10 +67,11 @@ class ConfirmDelete extends Component {
                     value='Delete'
                   />
                   { this.state.error
-                  ? <div className='error-msg'>
-                    There was an error. Please try again.
-                  </div> : ''
-                }
+                    ?  <div className='error-msg'>
+                         There was an error. Please try again.
+                       </div>
+                    : ''
+                  }
                 </div>
               }
             </form>
@@ -82,11 +83,11 @@ class ConfirmDelete extends Component {
 }
 
 ConfirmDelete.propTypes = {
-  eventId: PropTypes.number.isRequired,
-  timeslotId: PropTypes.number.isRequired,
   authToken: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  refreshEvent: PropTypes.func.isRequired
+  eventId: PropTypes.number.isRequired,
+  refreshEvent: PropTypes.func.isRequired,
+  timeslotId: PropTypes.number.isRequired
 }
 
 export default ConfirmDelete

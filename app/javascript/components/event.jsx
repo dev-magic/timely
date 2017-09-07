@@ -10,29 +10,29 @@ class Event extends Component {
     super(props)
 
     this.state = {
-      showModal: false,
       confirm: false,
+      showModal: false,
       ...props
     }
 
+    this.confirmModal = this.confirmModal.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
-    this.deleteTimeslot = this.deleteTimeslot.bind(this)
     this.refreshEvent = this.refreshEvent.bind(this)
   }
 
-  toggleModal () {
+  confirmModal (timeslotId) {
     this.setState({
-      showModal: !this.state.showModal,
-      confirm: false
+      confirm: timeslotId,
+      showModal: true
     })
 
     document.getElementsByTagName('body')[0].classList.toggle('modal-open')
   }
 
-  deleteTimeslot (timeslotId) {
+  toggleModal () {
     this.setState({
-      showModal: true,
-      confirm: timeslotId
+      confirm: false,
+      showModal: !this.state.showModal
     })
 
     document.getElementsByTagName('body')[0].classList.toggle('modal-open')
@@ -43,11 +43,26 @@ class Event extends Component {
     .then(result => {
       this.setState({ ...result.data })
     })
-    .catch(err => console.error(err))
+    .catch(console.error)
   }
 
   render () {
     const { event, users, timeslots, authToken } = this.state
+    const modal = this.state.confirm
+      ? <ConfirmDelete
+          authToken={authToken}
+          closeModal={this.toggleModal}
+          eventId={event.id}
+          refreshEvent={this.refreshEvent}
+          timeslotId={this.state.confirm}
+        />
+      : <AddTimeslot
+          authToken={authToken}
+          closeModal={this.toggleModal}
+          eventId={event.id}
+          refreshEvent={this.refreshEvent}
+          timeslots={timeslots.map(timeslot => timeslot.start_time)}
+        />
 
     return (
       <div className='event-container'>
@@ -69,11 +84,11 @@ class Event extends Component {
             {timeslots.sort((a, b) => a.start_time - b.start_time)
                       .map(timeslot =>
                         <Row
+                          confirmModal={this.confirmModal}
+                          duration={event.duration_minutes}
                           key={timeslot.id}
                           timeslot={timeslot}
                           users={users}
-                          duration={event.duration_minutes}
-                          deleteTimeslot={this.deleteTimeslot}
                         />
             )}
           </tbody>
@@ -85,33 +100,17 @@ class Event extends Component {
           Add New Timeslot
         </button>
 
-        { this.state.showModal
-          ? this.state.confirm
-          ? <ConfirmDelete
-            eventId={event.id}
-            timeslotId={this.state.confirm}
-            authToken={authToken}
-            closeModal={this.toggleModal}
-            refreshEvent={this.refreshEvent}
-          />
-          : <AddTimeslot
-            eventId={event.id}
-            closeModal={this.toggleModal}
-            timeslots={timeslots.map(timeslot => timeslot.start_time)}
-            authToken={authToken}
-            refreshEvent={this.refreshEvent}
-          /> : ''
-        }
+        { this.state.showModal ? modal : '' }
       </div>
     )
   }
 }
 
 Event.propTypes = {
+  authToken: PropTypes.string.isRequired,
   event: PropTypes.object.isRequired,
   timeslots: PropTypes.array.isRequired,
-  users: PropTypes.array.isRequired,
-  authToken: PropTypes.string.isRequired
+  users: PropTypes.array.isRequired
 }
 
 export default Event

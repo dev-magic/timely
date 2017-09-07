@@ -7,9 +7,8 @@ class Timeslot < ApplicationRecord
 
   after_create do |timeslot|
     @event = timeslot.event
-    @users = @event.users
 
-    @users.each do |user|
+    @event.users.each do |user|
       Preference.create!(
         timeslot_id: timeslot.id,
         user_id: user.id,

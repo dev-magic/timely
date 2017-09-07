@@ -9,8 +9,8 @@ class AddTimeslot extends Component {
 
     this.state = {
       eventId: props.eventId,
-      startTime: '',
       timeslots: props.timeslots,
+      startTime: '',
       saving: false,
       error: false
     }
@@ -66,7 +66,7 @@ class AddTimeslot extends Component {
           </div>
           <div className='modal__body'>
             { this.state.saving
-              ? <div className='loader' />
+            ? <div className='loader' />
             : <form onSubmit={this.handleSubmit} noValidate >
               <input
                 type='datetime-local'
@@ -77,8 +77,9 @@ class AddTimeslot extends Component {
               />
               { this.state.error
               ? <div className='error-msg'>
-                { this.state.error }
-              </div> : ''
+                  { this.state.error }
+                </div>
+              : ''
               }
               <div className='confirmation-bar'>
                 <input
@@ -103,11 +104,11 @@ class AddTimeslot extends Component {
 }
 
 AddTimeslot.propTypes = {
-  eventId: PropTypes.number.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  timeslots: PropTypes.array.isRequired,
   authToken: PropTypes.string.isRequired,
-  refreshEvent: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  eventId: PropTypes.number.isRequired,
+  refreshEvent: PropTypes.func.isRequired,
+  timeslots: PropTypes.array.isRequired
 }
 
 export default AddTimeslot
