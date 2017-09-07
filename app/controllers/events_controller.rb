@@ -17,12 +17,17 @@ class EventsController < ApplicationController
     event_json = JSONResource.new(event, serializer: EventShowSerializer).as_json
     timeslots_json = JSONResource.new(event.timeslots).as_json
     users_json = JSONResource.new(event.users).as_json
-    render react_component: 'Event',
-           props: {
-             event:     event_json,
-             timeslots: timeslots_json,
-             users:     users_json,
-             authToken: form_authenticity_token
-           }
+
+    props = {
+      event: event_json,
+      timeslots: timeslots_json,
+      users: users_json,
+      authToken: form_authenticity_token
+    }
+
+    respond_to do |format|
+      format.html { render react_component: 'Event', props: props }
+      format.json { render json: props }
+    end
   end
 end

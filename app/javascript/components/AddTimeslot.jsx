@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { dateToSeconds } from '../utils/dateFormat'
-import axios from 'axios'
+import { addTimeslot } from '../utils/api'
 
 class AddTimeslot extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -15,33 +15,33 @@ class AddTimeslot extends Component {
       error: false
     }
 
-    axios.defaults.headers.common['X-CSRF-Token'] = props.authToken
     this.closeModal = props.closeModal
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange(e) {
+  handleChange (e) {
     this.setState({ startTime: e.target.value })
   }
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault()
     const startTime = this.state.startTime
-    const  normalizedStart = dateToSeconds(startTime)
+    const normalizedStart = dateToSeconds(startTime)
 
-    if (startTime == '')
+    if (startTime === '') {
       return this.setState({ error: 'Please fill out the time completely.' })
-    else if (this.state.timeslots.includes(normalizedStart))
+    } else if (this.state.timeslots.includes(normalizedStart)) {
       return this.setState({ error: 'A timeslot already exists at that time.' })
-    else {
+    } else {
       this.setState({ saving: true })
 
-      axios.post(`/events/${this.state.eventId}/timeslots`, {
-        start_time: this.state.startTime
-      })
+      addTimeslot(this.props.eventId,
+                  this.state.startTime,
+                  this.props.authToken)
       .then(result => {
-        window.location.reload(true)
+        this.props.refreshEvent()
+        this.props.closeModal()
       })
       .catch(err => {
         console.error(err)
@@ -53,28 +53,28 @@ class AddTimeslot extends Component {
     }
   }
 
-  render() {
-    const { eventId, closeModal } = this.props
+  render () {
+    const { closeModal } = this.props
 
     return (
-      <div className='modal__background' onClick={ closeModal }>
+      <div className='modal__background' onClick={closeModal}>
         <div className='modal__dialogue' onClick={(e) => e.stopPropagation()}>
           <div className='modal__header info-header'>
             Add New Timeslot
           </div>
           <div className='modal__body'>
             { this.state.saving
-              ? <div className='loader' /> :
-            <form onSubmit={this.handleSubmit}>
+              ? <div className='loader' />
+            : <form onSubmit={this.handleSubmit}>
               <input
                 type='datetime-local'
                 name='start_time'
                 className='date-input'
-                value={ this.state.startTime }
-                onChange={ this.handleChange }
+                value={this.state.startTime}
+                onChange={this.handleChange}
               />
-              { this.state.error ?
-              <div className='error-msg'>
+              { this.state.error
+              ? <div className='error-msg'>
                 { this.state.error }
               </div> : ''
               }
@@ -82,7 +82,7 @@ class AddTimeslot extends Component {
                 <input
                   type='button'
                   className='btn btn--cancel'
-                  onClick={ closeModal }
+                  onClick={closeModal}
                   value='Cancel'
                 />
                 <input
@@ -104,7 +104,8 @@ AddTimeslot.propTypes = {
   eventId: PropTypes.number.isRequired,
   closeModal: PropTypes.func.isRequired,
   timeslots: PropTypes.array.isRequired,
-  authToken: PropTypes.string.isRequired
+  authToken: PropTypes.string.isRequired,
+  refreshEvent: PropTypes.func.isRequired
 }
 
 export default AddTimeslot

@@ -3,21 +3,24 @@ import PropTypes from 'prop-types'
 import Row from './TimeslotRow'
 import AddTimeslot from './AddTimeslot'
 import ConfirmDelete from './ConfirmDelete'
+import { getEvent } from '../utils/api'
 
 class Event extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
       showModal: false,
       confirm: false,
+      ...props
     }
 
     this.toggleModal = this.toggleModal.bind(this)
     this.deleteTimeslot = this.deleteTimeslot.bind(this)
+    this.refreshEvent = this.refreshEvent.bind(this)
   }
 
-  toggleModal() {
+  toggleModal () {
     this.setState({
       showModal: !this.state.showModal,
       confirm: false
@@ -26,7 +29,7 @@ class Event extends Component {
     document.getElementsByTagName('body')[0].classList.toggle('modal-open')
   }
 
-  deleteTimeslot(timeslotId) {
+  deleteTimeslot (timeslotId) {
     this.setState({
       showModal: true,
       confirm: timeslotId
@@ -35,8 +38,16 @@ class Event extends Component {
     document.getElementsByTagName('body')[0].classList.toggle('modal-open')
   }
 
-  render() {
-    const {event, users, timeslots, authToken } = this.props
+  refreshEvent () {
+    getEvent(this.state.event.id)
+    .then(result => {
+      this.setState({ ...result.data })
+    })
+    .catch(err => console.error(err))
+  }
+
+  render () {
+    const { event, users, timeslots, authToken } = this.state
 
     return (
       <div className='event-container'>
@@ -74,19 +85,21 @@ class Event extends Component {
           Add New Timeslot
         </button>
 
-        { this.state.showModal ?
-          this.state.confirm ?
-          <ConfirmDelete
+        { this.state.showModal
+          ? this.state.confirm
+          ? <ConfirmDelete
             eventId={event.id}
             timeslotId={this.state.confirm}
             authToken={authToken}
             closeModal={this.toggleModal}
-          /> :
-          <AddTimeslot
+            refreshEvent={this.refreshEvent}
+          />
+          : <AddTimeslot
             eventId={event.id}
             closeModal={this.toggleModal}
             timeslots={timeslots.map(timeslot => timeslot.start_time)}
             authToken={authToken}
+            refreshEvent={this.refreshEvent}
           /> : ''
         }
       </div>

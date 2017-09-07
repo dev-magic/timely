@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
+import { deleteTimeslot } from '../utils/api'
 
 class ConfirmDelete extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -13,23 +13,19 @@ class ConfirmDelete extends Component {
       error: false
     }
 
-    axios.defaults.headers.common['X-CSRF-Token'] = props.authToken
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault()
     this.setState({ deleting: true })
 
-    const params = new URLSearchParams()
-    params.append('_method', 'delete')
-
-    axios.post(
-      `/events/${this.state.eventId}/timeslots/${this.state.timeslotId}`,
-      params
-    )
+    deleteTimeslot(this.props.eventId,
+                this.props.timeslotId,
+                this.props.authToken)
     .then(result => {
-      window.location.reload(true)
+      this.props.refreshEvent()
+      this.props.closeModal()
     })
     .catch(err => {
       console.error(err)
@@ -40,29 +36,29 @@ class ConfirmDelete extends Component {
     })
   }
 
-  render() {
-   const {
+  render () {
+    const {
      eventId,
      timeslotId,
      authToken,
      closeModal
    } = this.props
 
-   return (
-      <div className='modal__background' onClick={ closeModal }>
+    return (
+      <div className='modal__background' onClick={closeModal}>
         <div className='modal__dialogue' onClick={(e) => e.stopPropagation()}>
           <div className='modal__header warning-header'>
             Delete Timeslot?
           </div>
           <div className='modal__body'>
-            <form onSubmit={ this.handleSubmit }>
-              { this.state.deleting ?
-                <div className='loader' /> :
-                <div className='confirmation-bar'>
+            <form onSubmit={this.handleSubmit}>
+              { this.state.deleting
+                ? <div className='loader' />
+                : <div className='confirmation-bar'>
                   <input
                     type='button'
                     className='btn btn--confirm'
-                    onClick={ closeModal }
+                    onClick={closeModal}
                     value='Cancel'
                   />
                   <input
@@ -70,8 +66,8 @@ class ConfirmDelete extends Component {
                     className='btn btn--cancel'
                     value='Delete'
                   />
-                { this.state.error ?
-                  <div className='error-msg'>
+                  { this.state.error
+                  ? <div className='error-msg'>
                     There was an error. Please try again.
                   </div> : ''
                 }
@@ -81,14 +77,16 @@ class ConfirmDelete extends Component {
           </div>
         </div>
       </div>
-  )}
+    )
+  }
 }
 
 ConfirmDelete.propTypes = {
   eventId: PropTypes.number.isRequired,
   timeslotId: PropTypes.number.isRequired,
   authToken: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  refreshEvent: PropTypes.func.isRequired
 }
 
 export default ConfirmDelete
