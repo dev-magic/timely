@@ -8,8 +8,8 @@ export const format12Hour = (hours, minutes) => {
   return `${((hours + 11) % 12 + 1)}:${minuteStr}${period}`
 }
 
-export const formatTimeslot = (timeInMs, duration) => {
-  const dateObject = new Date(timeInMs * 1000)
+export const formatTimeslot = (timeInSeconds, duration) => {
+  const dateObject = new Date(timeInSeconds * 1000)
   const dateString = format(dateObject, ['YYYY-MM-DD'])
   const hours = dateObject.getUTCHours()
   const minutes = dateObject.getUTCMinutes()
@@ -25,4 +25,12 @@ export const formatTimeslot = (timeInMs, duration) => {
       <p>{`${start}-${end}`}</p>
     </div>
   )
+}
+
+export const dateToSeconds = (timeString) => {
+  const date = new Date(timeString)
+  const offset = date.getTimezoneOffset() * 60
+  const timeInSeconds = date / 1000
+
+  return timeInSeconds - offset
 }

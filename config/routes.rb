@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root :to => "events#index"
-  resources :events, only: [:index, :show]
+
+  resources :events, only: [:index, :show] do
+    resources :timeslots, only: [:create, :destroy]
+  end
 end
