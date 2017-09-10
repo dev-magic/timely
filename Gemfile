@@ -20,10 +20,11 @@ gem 'webpacker'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'webpacker-react'
-
+# View templating replacement for erb
 gem 'haml'
-
 gem 'haml-rails'
+# Replace ids in URLs with friendlier names
+gem 'friendly_id'
 
 # Custom serialization for models
 gem 'active_model_serializers', '~> 0.10.6'

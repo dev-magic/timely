@@ -1,5 +1,8 @@
 # Event for users to attend
 class Event < ApplicationRecord
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   validates :name, presence: true
   validates :duration_minutes, presence: true
 
