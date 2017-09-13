@@ -3,4 +3,6 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database letsmeetup_test;' -U postgres
-script: phantomjs testrunner.js
+script:
+  - phantomjs testrunner.js
+  - bundle exec rake
