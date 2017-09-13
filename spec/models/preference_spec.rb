@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Preference, type: :model do
-  let!(:user) { User.create(name: "dev magic", email: "me@example.com")}
+  let!(:user) { User.create(name: "dev magic", email: "me@example.com", password: "password")}
   let!(:location) { Location.create(name: "dev magic", address: "555 Drury lane" ) }
   let!(:event) { Event.create(name: "dev magic", time: DateTime.now, duration_minutes: 30, location_id: location.id)}
   let!(:timeslot) { Timeslot.create(start_time: DateTime.now, event_id: event.id)}

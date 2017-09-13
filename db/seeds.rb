@@ -15,7 +15,8 @@ USERS_PER_EVENT = 5
 NUM_USERS.times do
   User.create!({
     name: Faker::Name.unique.name,
-    email: Faker::Internet.unique.email
+    email: Faker::Internet.unique.email,
+    password: Faker::Internet.password
   })
 end
 

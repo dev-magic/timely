@@ -6,8 +6,16 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 require 'database_cleaner'
+require 'capybara/poltergeist'
+require 'capybara/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+#config for rspec testing with react
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false})
+end
+
+Capybara.javascript_driver = :poltergeist
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -60,8 +68,12 @@ RSpec.configure do |config|
     end
     #adds this from
     #https://stackoverflow.com/questions/37753251/actionmailer-not-delivering-confirmation-emails-in-test-environment-rails-4
-    config.before(:each, truncation: true) do 
-      Database::Cleaner.strategy = :truncation 
+    config.before(:each, truncation: true, js: true) do |example|
+      if example.example.metadata[:js]
+        Database::Cleaner.strategy = :truncation 
+      else
+        Database::Cleaner.strategy = :transaction 
+      end
     end
 
     config.before(:each) do
