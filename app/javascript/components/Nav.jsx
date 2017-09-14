@@ -90,4 +90,4 @@ class Nav extends Component {
   }
 }
 
- export default Nav
+export default Nav
