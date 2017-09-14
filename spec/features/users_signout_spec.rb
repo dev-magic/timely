@@ -5,14 +5,7 @@ RSpec.describe "Users can sign out", js: true do
   let(:user) { User.create(name: "dev magic", email: "me@example.com", password: "password") }
 
   before(:each) do
-    visit new_user_session_path
-
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-
-    within '.actions' do
-      click_button "Log in"
-    end
+    sign_in_user user
   end
 
   scenario "signout from root path" do
