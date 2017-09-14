@@ -47,7 +47,7 @@ Event.all.each do |event|
       start_time: Faker::Time.forward(30)
     )
     timeslot.preferences.each do |preference|
-      preference.preference_type = rand(4)
+      preference.preference_type = rand(5)
       preference.save
     end
   end
