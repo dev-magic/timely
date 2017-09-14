@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'database_cleaner'
 require 'capybara/poltergeist'
 require 'capybara/rails'
+require 'support/spec_test_helper'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 #config for rspec testing with react

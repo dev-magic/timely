@@ -2,15 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "Users can sign in", js: true do
 
-  let(:user) { User.create(name: "dev magic", email: "me@example.com", password: "password") }
+  let!(:user) { User.create(name: "dev magic", email: "me@example.com", password: "password") }
 
   scenario "#success" do
 
-    visit root_path
-
-    within '.auth-bar' do
-      click_button "Sign In"
-    end
+    # confirm account from support/spec_test_helper 
+    confirm_account
 
     expect(page).to have_current_path new_user_session_path
 
@@ -28,11 +25,7 @@ RSpec.describe "Users can sign in", js: true do
 
   scenario "#failure" do
 
-    visit root_path
-
-    within '.auth-bar' do
-      click_button "Sign In"
-    end
+    confirm_account
 
     expect(page).to have_current_path new_user_session_path
 
