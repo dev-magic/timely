@@ -16,13 +16,13 @@ RSpec.describe "Users can sign in", js: true do
     expect(page).to have_current_path new_user_session_path
 
     fill_in "Email", with: user.email
-    fill_in "Password", with: user.password 
+    fill_in "Password", with: user.password
 
     within '.actions' do
       click_button "Log in"
     end
 
-    expect(page).to have_current_path root_path 
+    expect(page).to have_current_path root_path
     expect(page).to have_content "Signed in successfully."
 
   end

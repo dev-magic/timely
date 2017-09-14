@@ -1,37 +1,35 @@
 require 'rails_helper'
 
-RSpec.feature 'Add A New Event' do
-
-  let(:location) { Location.create(name: "Coffee Bean and Tea Leaf", address: "925 Camino De La Reina C, San Diego, CA 92108") }
-  let(:event) { Event.create(name: "Dev Magic", time: Datetime.now, duration_minutes: 30, location_id: location.id) }
+RSpec.feature 'Add A New Event', js: true do
 
   scenario "users can add a new event" do
-    pending('Pending a merge')
-    visit root_path
+    visit events_path
 
-    click_button "Add Event"
+    click_on "Create New Event"
 
-    fill_in "Name", with: event.name
-    fill_in "Time", with: event.time
-    fill_in "Duration", with: event.duration_minutes
-    fill_in "Location", with: location.name || location.address
+    fill_in "name", with: Faker::Name.name
+    fill_in "durationMinutes", with: rand(30..300)
+    fill_in "locationName", with: Faker::Address.community
+    fill_in "locationAddress", with: Faker::Address.street_address
 
-    expect(page).to have_content "Event added Successfully."
-    expect(page).to have_current_path events_path
+    click_on "Submit"
+
+    expect(page).to have_css ".event-container"
+    expect(page).to have_css ".event__header"
   end
 
   scenario "users can not add a new event" do
-    pending('Pending a merge')
     visit root_path
 
-    click_button "Add Event"
+    click_on "Create New Event"
 
-    fill_in "Name", with: ""
-    fill_in "Time", with: ""
-    fill_in "Duration", with: ""
-    fill_in "Location", with: ""
+    fill_in "durationMinutes", with: 5
 
-    expect(page).to have_content "Please fill in all required fields."
-    expect(page).to have_current_path new_events_path
+    click_on "Submit"
+
+    expect(page).to have_content 'Event Name is Required'
+    expect(page).to have_content 'Duration Must Be at Least 15 Min'
+    expect(page).to have_content 'If Creating New Location, Name and Address Are Required'
+    expect(page).to have_current_path new_event_path
   end
 end
