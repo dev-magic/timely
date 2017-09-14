@@ -10,4 +10,13 @@ class Event < ApplicationRecord
   has_many :events_users, dependent: :destroy
   has_many :users, through: :events_users
   has_many :timeslots, dependent: :destroy
+
+  after_create do |event|
+    User.find_each do |user|
+      EventsUser.create(
+        event_id: event.id,
+        user_id: user.id
+      )
+    end
+  end
 end

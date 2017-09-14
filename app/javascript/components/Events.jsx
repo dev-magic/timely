@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 
 const Events = ({events}) =>
   <div>
+    <a id='new-event' href='/events/new' className='add-event-btn btn'>
+      Create New Event
+    </a>
     <h1 className='text--header'>Upcoming Events</h1>
 
     <div className='events-container'>
