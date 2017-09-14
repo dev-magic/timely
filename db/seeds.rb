@@ -44,7 +44,7 @@ Event.all.each do |event|
   TIMESLOTS_PER_EVENT.times do
     timeslot = Timeslot.create!(
       event_id: event.id,
-      start_time: Faker::Time.forward
+      start_time: Faker::Time.forward(30)
     )
     timeslot.preferences.each do |preference|
       preference.preference_type = rand(4)
