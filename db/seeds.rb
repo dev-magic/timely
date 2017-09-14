@@ -39,7 +39,7 @@ end
 
 USERS = User.all
 
-Event.all.each do |event|
+Event.find_each do |event|
   event.users = USERS.sample(USERS_PER_EVENT)
   TIMESLOTS_PER_EVENT.times do
     timeslot = Timeslot.create!(
