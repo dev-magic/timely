@@ -21,7 +21,7 @@ RSpec.describe "Users can sign in", js: true do
       click_button "Log in"
     end
 
-    expect(page).to have_current_path root_path
+    expect(page).to have_current_path events_path
     expect(page).to have_content "Signed in successfully."
 
   end

@@ -17,7 +17,7 @@ RSpec.describe "Users can sign out", js: true do
 
   scenario "signout from root path" do
 
-    expect(page).to have_current_path root_path
+    expect(page).to have_current_path events_path
     expect(page).to_not have_content "Sign In"
     expect(page).to_not have_content "Sign Up"
     expect(page).to have_content "Hello, dev magic!"
