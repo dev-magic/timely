@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_params, if: :devise_controller?
 
   layout 'application'
-  before_action :auth_token
+  before_action :auth
 
   protected
 
@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 
-  def auth_token
+  def auth
     @auth_token ||= form_authenticity_token
+    @current_user ||= current_user
   end
 end

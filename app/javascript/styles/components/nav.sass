@@ -13,3 +13,19 @@ nav
   text-shadow: 3px 3px $color--mineshaft
   a
     color: $color--logo
+
+.greeting-bar
+  display: flex
+  align-items: center
+
+.greeting
+  color: white
+  margin-right: 15px
+  text-shadow: 1px 1px 3px $color--lolite
+
+.sign-out
+  background: $color--hilite
+  box-shadow: 0 0 5px $color--lolite, 0 0 10px $color--main inset
+  color: white
+  text-shadow: 1px 1px 3px $color--lolite
+  @include hover-change($color--hilite)

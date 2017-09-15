@@ -18,7 +18,10 @@
 
   %body
     .container
-      = react_component 'Nav', authToken: @auth_token
+      = react_component 'Nav',
+      authToken: @auth_token,
+      currentUser: @current_user
+
       = yield
       = render partial: '/shared/main'
 
