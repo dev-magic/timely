@@ -28,6 +28,9 @@ gem 'haml-rails'
 # Replace ids in URLs with friendlier names
 gem 'friendly_id'
 
+# Enables Hot-Module-Reloading because webpack-dev-server needs to run separately
+gem 'foreman'
+
 # Custom serialization for models
 gem 'active_model_serializers', '~> 0.10.6'
 

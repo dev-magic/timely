@@ -8,9 +8,9 @@
 
 `bundle && yarn`
 
-`rails s`
+`foreman start`
 
-point browser to localhost:3000
+point browser to localhost:5000
 
 
 ## Contributing
