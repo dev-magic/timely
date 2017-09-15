@@ -15,17 +15,54 @@ nav
     color: $color--logo
 
 .greeting-bar
-  display: flex
   align-items: center
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+.auth-bar, .greeting
+  align-items: center
+  display: flex
 
 .greeting
   color: white
-  margin-right: 15px
   text-shadow: 1px 1px 3px $color--lolite
+  &:hover
+  cursor: pointer
 
-.sign-out
-  background: $color--hilite
-  box-shadow: 0 0 5px $color--lolite, 0 0 10px $color--main inset
+.greeting-msg
+  margin-left: 8px
+  margin-right: 15px
+
+.signout-form
+  position: absolute
+  opacity: 0
+  top: 45px
+  visibility: hidden
+  transition: all 0.5s ease;
+
+.show-signout
+  opacity: 1
+  top: 58px
+  visibility: visible
+
+.signout
+  background: $color--main
+  border: none;
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 1px 1px darken($color--lolite, 15%)
   color: white
+  padding: 8px 35px;
   text-shadow: 1px 1px 3px $color--lolite
-  @include hover-change($color--hilite)
+  @include hover-change($color--main)
+
+.signout-arrow
+  color: darken($color--lolite, 10%)
+  margin: 0 15px 0 0
+  text-shadow: 0 1px $color--hilite
+
+.fa-sort-down
+  margin-top: -5px
+
+.fa-sort-up
+  margin-top: 2px

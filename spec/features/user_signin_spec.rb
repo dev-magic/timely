@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 RSpec.describe "Users can sign in", js: true do
 
   let(:user) { User.create(name: "dev magic", email: "me@example.com", password: "password") }
