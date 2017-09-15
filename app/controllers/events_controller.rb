@@ -3,6 +3,9 @@ class EventsController < ApplicationController
 
   before_action :create_new_location, only: :create
 
+  def landing
+  end
+
   def index
     events = Event.includes(:location)
     events_json = JSONResource.new(events).as_json

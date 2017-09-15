@@ -21,7 +21,7 @@ RSpec.describe "Users can sign up", js: true do
       click_button "Sign up"
     end
 
-    expect(page).to have_current_path root_path 
+    expect(page).to have_current_path events_path
     expect(page).to have_content "You have signed up successfully."
 
   end
