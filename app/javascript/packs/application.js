@@ -14,6 +14,7 @@ import Nav from 'components/Nav'
 import Events from 'components/Events'
 import Event from 'components/Event'
 import EventNew from 'components/EventNew'
+import LandingPage from 'components/LandingPage'
 
 import 'font-awesome/scss/font-awesome.scss'
 import '../styles/application'
@@ -26,5 +27,6 @@ WebpackerReact.setup({
   Nav,
   Events,
   Event,
-  EventNew
+  EventNew,
+  LandingPage
 })

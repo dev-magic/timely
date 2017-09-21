@@ -19,7 +19,7 @@ RSpec.feature 'Add A New Event', js: true do
   end
 
   scenario "users can not add a new event" do
-    visit root_path
+    visit events_path
 
     click_on "Create New Event"
 
