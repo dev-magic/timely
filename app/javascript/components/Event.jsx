@@ -27,7 +27,7 @@ class Event extends Component {
       showModal: true
     })
 
-    document.getElementsByTagName('body')[0].classList.toggle('modal-open')
+    document.body.classList.toggle('modal-open')
   }
 
   toggleModal () {
@@ -36,18 +36,24 @@ class Event extends Component {
       showModal: !this.state.showModal
     })
 
-    document.getElementsByTagName('body')[0].classList.toggle('modal-open')
+    document.body.classList.toggle('modal-open')
   }
 
   updatePreference (id, preferenceType) {
     updatePreference(id, preferenceType, this.props.authToken)
-    .then(result => this.refreshEvent())
-    .catch(console.error)
+    .then(
+      // Optimistically update
+    )
+    .catch( err => {
+      console.error(err)
+      // If update fails, reset preference to value in db
+      this.refreshEvent()
+    })
   }
 
   refreshEvent () {
     getEvent(this.state.event.slug)
-    .then(result => {
+    .then( result => {
       this.setState({ ...result.data })
     })
     .catch(console.error)

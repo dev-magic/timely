@@ -1,8 +1,9 @@
 class PreferencesController < ApplicationController
   def update
     preference = Preference.find(params[:id])
-    preference.update(update_params)
+    preference.update(preference_type: params[:preference_type])
     preference.save
+    head :ok
   end
 
   def update_params
