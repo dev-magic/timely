@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Row from './TimeslotRow'
 import AddTimeslot from './AddTimeslot'
 import ConfirmDelete from './ConfirmDelete'
-import { getEvent } from '../utils/api'
+import { getEvent, updatePreference } from '../utils/api'
 
 class Event extends Component {
   constructor (props) {
@@ -18,6 +18,7 @@ class Event extends Component {
     this.confirmModal = this.confirmModal.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
     this.refreshEvent = this.refreshEvent.bind(this)
+    this.updatePreference = this.updatePreference.bind(this)
   }
 
   confirmModal (timeslotId) {
@@ -36,6 +37,12 @@ class Event extends Component {
     })
 
     document.getElementsByTagName('body')[0].classList.toggle('modal-open')
+  }
+
+  updatePreference (id, preferenceType) {
+    updatePreference(id, preferenceType, this.props.authToken)
+    .then(result => this.refreshEvent())
+    .catch(console.error)
   }
 
   refreshEvent () {
@@ -89,6 +96,7 @@ class Event extends Component {
                           key={timeslot.id}
                           timeslot={timeslot}
                           users={users}
+                          updatePreference={this.updatePreference}
                         />
             )}
           </tbody>

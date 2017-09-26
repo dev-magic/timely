@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   resources :events, only: [:index, :show, :new, :create, :landing] do
     resources :timeslots, only: [:create, :destroy]
   end
+  resources :preferences, only: [:update]
 
 end
