@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { formatTimeslot } from '../utils/dateFormat'
+import Preference from './Preference'
 
-const TimeSlotRow = ({ timeslot, duration, confirmModal }) => {
+const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => {
   return (
     <tr>
       <td>
@@ -16,7 +17,11 @@ const TimeSlotRow = ({ timeslot, duration, confirmModal }) => {
       </td>
       {timeslot.preferences.sort((a, b) => b.user_id - a.user_id)
                            .map(preference =>
-                             <td className={preference.preference_type} key={preference.id} />
+                             <Preference key={preference.id}
+                                         id={preference.id}
+                                         preferenceType={preference.preference_type}
+                                         updatePreference={updatePreference}
+                             />
       )}
     </tr>
   )
@@ -25,7 +30,8 @@ const TimeSlotRow = ({ timeslot, duration, confirmModal }) => {
 TimeSlotRow.propTypes = {
   confirmModal: PropTypes.func.isRequired,
   duration: PropTypes.number.isRequired,
-  timeslot: PropTypes.object.isRequired
+  timeslot: PropTypes.object.isRequired,
+  updatePreference: PropTypes.func.isRequired
 }
 
 export default TimeSlotRow

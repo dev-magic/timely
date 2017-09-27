@@ -16,3 +16,10 @@ export const getEvent = (eventId, authToken) => {
   axios.defaults.headers.common['X-CSRF-Token'] = authToken
   return axios.get(`/events/${eventId}.json`)
 }
+
+export const updatePreference = (preferenceId, preferenceType, authToken) => {
+  axios.defaults.headers.common['X-CSRF-Token'] = authToken
+  return axios.patch(`/preferences/${preferenceId}.json`, {
+    preference_type: preferenceType
+  })
+}
