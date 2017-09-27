@@ -2,11 +2,19 @@ require 'rails_helper'
 
 RSpec.feature 'Add A New Event', js: true do
 
-  scenario "users can add a new event" do
+  let(:user) { User.new(
+                        name: "John",
+                        email: "j@n.com",
+                        password: "123456"
+                        ) }
+
+  before(:each) do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit events_path
-
     click_on "Create New Event"
+  end
 
+  scenario "users can add a new event" do
     fill_in "name", with: Faker::Name.name
     fill_in "durationMinutes", with: rand(30..300)
     fill_in "locationName", with: Faker::Address.community
@@ -19,10 +27,6 @@ RSpec.feature 'Add A New Event', js: true do
   end
 
   scenario "users can not add a new event" do
-    visit events_path
-
-    click_on "Create New Event"
-
     fill_in "durationMinutes", with: 5
 
     click_on "Submit"
