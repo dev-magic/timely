@@ -20,7 +20,8 @@
     .container
       = react_component 'Nav',
       authToken: @auth_token,
-      currentUser: @current_user
+      currentUser: @current_user,
+      flashMsg: @flash_message
 
       = yield
       = render partial: '/shared/main'

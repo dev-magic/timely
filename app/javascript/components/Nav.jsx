@@ -16,7 +16,13 @@ class Nav extends Component {
   }
 
   render() {
-    const { authToken, currentUser } = this.props
+    const { authToken, currentUser, flashMsg } = this.props
+
+    const flashMessage = (
+      <div className='flashMessage'>
+        { flashMsg }
+      </div>
+    )
 
     const signInButtons = (
       <div>
@@ -78,7 +84,10 @@ class Nav extends Component {
         <div className='logo'>
           <a href='/'>Let's Meet Up!</a>
         </div>
-
+        { flashMsg
+        ? flashMessage
+        : ''
+        }
         <div className='auth-bar'>
         { currentUser
         ? signOutButton
