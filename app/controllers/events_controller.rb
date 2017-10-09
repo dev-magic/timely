@@ -2,8 +2,10 @@ class EventsController < ApplicationController
   JSONResource = ActiveModelSerializers::SerializableResource
 
   before_action :create_new_location, only: :create
+  skip_before_action :auth, only: :landing
 
   def landing
+    @auth_token ||= form_authenticity_token if current_user
   end
 
   def index

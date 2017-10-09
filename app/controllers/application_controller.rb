@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   layout 'application'
   before_action :auth
+  skip_before_action :auth, if: :devise_controller?
 
   protected
 
@@ -18,7 +19,12 @@ class ApplicationController < ActionController::Base
   end
 
   def auth
-    @auth_token ||= form_authenticity_token
-    @current_user ||= current_user
+    if current_user
+      @auth_token ||= form_authenticity_token
+      @current_user = current_user
+    else
+      @flash_message = 'Please sign in first'
+      render :landing
+    end
   end
 end
