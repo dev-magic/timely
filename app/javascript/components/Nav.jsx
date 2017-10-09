@@ -82,7 +82,11 @@ class Nav extends Component {
     return (
       <nav className='navbar'>
         <div className='logo'>
+<<<<<<< HEAD
           <a href='/events'>Timely</a>
+=======
+          <a href='/events'>Let's Meet Up!</a>
+>>>>>>> a14aa39... Style Devise forms, #50
         </div>
         { flashMsg
         ? flashMessage
