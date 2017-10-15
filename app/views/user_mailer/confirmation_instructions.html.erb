@@ -1,0 +1,8 @@
+<h2 class="welcome-header">Welcome <%= @resource.email %>. Thanks for signing up!</h2>
+
+<p>Please confirm your account using the link below:</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<%= image_tag(attachments['norris_email.jpg'].url) %>
+

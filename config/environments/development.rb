@@ -6,6 +6,37 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+
+  # Mailers
+  # need to insert an actual email address to replace faker data
+  # Add email within 'from', 'user_name' and email password within 'password'
+
+  # Something like this
+  # from: myemail@gmail.com
+  # user_name: myemail@gmail.com
+  # password: password for your email
+  # once those fields are set, you will be able to send the confirmation email
+  config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
+
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = { from: ENV['TEAM_EMAIL'] }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'gmail.com',
+      user_name:            ENV['TEAM_EMAIL'],
+      password:             ENV['TEAM_PASSWORD'],
+      authentication:       'plain',
+      enable_starttls_auto: true
+  }
+
+  # Custom config mailer preview path
+  config.action_mailer.preview_path = "#{Rails.root}/test/mailers/previews"
+
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -27,7 +58,7 @@ Rails.application.configure do
   end
 
   #Devise configurations
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
