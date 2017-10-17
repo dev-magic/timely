@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AddTimeslot from './AddTimeslot'
 
 class EventNew extends Component {
   constructor(props) {
@@ -10,22 +11,43 @@ class EventNew extends Component {
       locationId: '0',
       locationName: '',
       locationAddress: '',
+      timeslots: [],
       errors: {
         nameInvalid: false,
         durationInvalid: false,
         locationInvalid: false
-      }
+      },
+      showModal: false,
     }
 
+    this.queueTimeslot = this.queueTimeslot.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.validateForm = this.validateForm.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  queueTimeslot(timeslot) {
+    this.setState({
+      timeslots: [
+        ...this.state.timeslots,
+        timeslot
+      ]})
+  }
+
+  toggleModal() {
+    this.setState({
+      showModal: !this.state.showModal
+    })
+
+    document.body.classList.toggle('modal-open')
+  }
+
   validateForm(e) {
+    e.preventDefault()
     const errors = this.state.errors
 
     if (this.state.name == '') {
@@ -49,7 +71,6 @@ class EventNew extends Component {
     }
 
     if (errors.nameInvalid || errors.durationInvalid || errors.locationInvalid) {
-      e.preventDefault()
       this.setState({ errors })
     }
   }
@@ -157,6 +178,15 @@ class EventNew extends Component {
                 />
               </div>
             </div>
+            <div
+              class="new-event-container">
+              <button
+                className='new-timeslot btn no-float'
+                onClick={this.toggleModal}
+              >
+                Add New Timeslot
+              </button>
+              </div>
             <input
               type='submit'
               className='btn btn--confirm'
@@ -164,6 +194,16 @@ class EventNew extends Component {
             />
           </div>
         </form>
+        {this.state.showModal ?
+          <AddTimeslot
+            authToken={this.state.authToken}
+            closeModal={this.toggleModal}
+            parent="new_event"
+            queueTimeslot={this.queueTimeslot}
+            timeslots={this.state.timeslots}
+          />
+          : ''
+        }
       </div>
     )
   }

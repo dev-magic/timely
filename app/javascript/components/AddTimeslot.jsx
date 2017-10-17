@@ -15,6 +15,8 @@ class AddTimeslot extends Component {
       error: false
     }
 
+    this.queueTimeslot = props.queueTimeslot
+    this.parent = props.parent
     this.closeModal = props.closeModal
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -36,22 +38,27 @@ class AddTimeslot extends Component {
     } else if (new Date(startTime) < Date.now()) {
       return this.setState({ error: 'Timeslot must be in the future.' })
     } else {
-      this.setState({ saving: true })
+      if (this.parent == 'new_event') {
+        this.queueTimeslot(this.state.startTime)
+        this.closeModal()
+      } else {
+        this.setState({ saving: true })
 
-      addTimeslot(this.props.eventId,
-                  this.state.startTime,
-                  this.props.authToken)
-      .then(result => {
-        this.props.refreshEvent()
-        this.props.closeModal()
-      })
-      .catch(err => {
-        console.error(err)
-        this.setState({
-          saving: false,
-          error: 'An error occurred. Please try again'
+        addTimeslot(this.props.eventId,
+                    this.state.startTime,
+                    this.props.authToken)
+        .then(result => {
+          this.props.refreshEvent()
+          this.props.closeModal()
         })
-      })
+        .catch(err => {
+          console.error(err)
+          this.setState({
+            saving: false,
+            error: 'An error occurred. Please try again'
+          })
+        })
+      }
     }
   }
 
