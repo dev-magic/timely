@@ -47,7 +47,6 @@ class EventNew extends Component {
   }
 
   validateForm(e) {
-    e.preventDefault()
     const errors = this.state.errors
 
     if (this.state.name == '') {
@@ -72,6 +71,7 @@ class EventNew extends Component {
 
     if (errors.nameInvalid || errors.durationInvalid || errors.locationInvalid) {
       this.setState({ errors })
+      e.preventDefault()
     }
   }
 
@@ -89,6 +89,11 @@ class EventNew extends Component {
             type='hidden'
             name='authenticity_token'
             value={ this.props.authToken }
+          />
+          <input
+            type='hidden'
+            name='timeslots'
+            value={ this.state.timeslots }
           />
           <h1 className='new-event-title'>Create a New Event</h1>
           <div className='new-event-fields'>
@@ -178,21 +183,22 @@ class EventNew extends Component {
                 />
               </div>
             </div>
-            <div
-              class="new-event-container">
-              <button
-                className='new-timeslot btn no-float'
-                onClick={this.toggleModal}
-              >
-                Add New Timeslot
-              </button>
-              </div>
-            <input
-              type='submit'
-              className='btn btn--confirm'
-              value='Submit'
-            />
-          </div>
+            <button
+              className='new-timeslot btn no-float'
+              onClick={(e) => {
+                e.preventDefault()
+                this.toggleModal()
+                }
+              }
+            >
+              Add New Timeslot
+            </button>
+            </div>
+          <input
+            type='submit'
+            className='btn btn--confirm'
+            value='Submit'
+          />
         </form>
         {this.state.showModal ?
           <AddTimeslot

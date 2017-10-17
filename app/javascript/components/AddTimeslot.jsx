@@ -29,7 +29,7 @@ class AddTimeslot extends Component {
   handleSubmit (e) {
     e.preventDefault()
     const startTime = this.state.startTime
-    const normalizedStart = dateToSeconds(startTime)
+    const normalizedStart = this.parent == "new_event" ? startTime : dateToSeconds(startTime)
 
     if (startTime === '') {
       return this.setState({ error: 'Please fill out the time completely.' })
