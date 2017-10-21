@@ -32,12 +32,12 @@ class AddTimeslot extends Component {
 
     if (startTime === '') {
       return this.setState({ error: 'Please fill out the time completely.' })
-    } else if (this.state.timeslots.includes(normalizedStart)) {
-      return this.setState({ error: 'A timeslot already exists at that time.' })
+    } else if (this.state.timeslots.indexOf(normalizedStart) !== -1) {
+       return this.setState({ error: 'A timeslot already exists at that time.' })
     } else if (new Date(startTime) < Date.now()) {
-      return this.setState({ error: 'Timeslot must be in the future.' })
+     return this.setState({ error: 'Timeslot must be in the future.' })
     } else {
-      this.callback(this.state.startTime)
+      this.callback(startTime)
       this.closeModal()
     }
   }
@@ -55,7 +55,7 @@ class AddTimeslot extends Component {
             <form onSubmit={this.handleSubmit} noValidate >
               <input
                 type='datetime-local'
-                name='start_time'
+                name='startTime'
                 className='date-input'
                 value={this.state.startTime}
                 onChange={this.handleChange}
@@ -75,6 +75,7 @@ class AddTimeslot extends Component {
                 />
                 <input
                   type='submit'
+                  id='timeslot-submit'
                   className='btn btn--confirm'
                   value='Submit'
                 />

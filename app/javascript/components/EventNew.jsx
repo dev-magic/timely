@@ -18,7 +18,7 @@ class EventNew extends Component {
         locationInvalid: false,
         noTimeslots: false
       },
-      showModal: false,
+      showModal: false
     }
 
     this.queueTimeslot = this.queueTimeslot.bind(this)
@@ -206,18 +206,18 @@ class EventNew extends Component {
             </div>
           <input
             type='submit'
+            id='new-event-submit'
             className='btn btn--confirm'
             value='Submit'
           />
         </form>
-        {this.state.showModal ?
+        {this.state.showModal &&
           <AddTimeslot
             callback={this.queueTimeslot}
             closeModal={this.toggleModal}
             parent="new_event"
             timeslots={this.state.timeslots}
           />
-          : ''
         }
       </div>
     )
