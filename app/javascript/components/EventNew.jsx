@@ -15,7 +15,8 @@ class EventNew extends Component {
       errors: {
         nameInvalid: false,
         durationInvalid: false,
-        locationInvalid: false
+        locationInvalid: false,
+        noTimeslots: false
       },
       showModal: false,
     }
@@ -69,7 +70,13 @@ class EventNew extends Component {
       errors.locationInvalid = false
     }
 
-    if (errors.nameInvalid || errors.durationInvalid || errors.locationInvalid) {
+    if (this.state.timeslots.length === 0) {
+      errors.noTimeslots = 'Event Must Have at Least One Timeslot'
+    } else {
+      errors.noTimeslots =  false
+    }
+
+    if (Object.keys(errors).some( key => errors[key])) {
       this.setState({ errors })
       e.preventDefault()
     }
@@ -107,11 +114,10 @@ class EventNew extends Component {
                 value={ this.state.name }
                 onChange={ this.handleChange }
               />
-              { this.state.errors.nameInvalid
-                ? <div className='error-msg'>
-                    { this.state.errors.nameInvalid }
-                  </div>
-                : ''
+              { this.state.errors.nameInvalid &&
+                <div className='error-msg'>
+                  { this.state.errors.nameInvalid }
+                </div>
               }
             </div>
             <div>
@@ -125,11 +131,10 @@ class EventNew extends Component {
                 value={ this.state.durationMinutes }
                 onChange={ this.handleChange }
               />
-              { this.state.errors.durationInvalid
-                ? <div className='error-msg'>
-                    { this.state.errors.durationInvalid }
-                  </div>
-                : ''
+              { this.state.errors.durationInvalid &&
+                <div className='error-msg'>
+                  { this.state.errors.durationInvalid }
+                </div>
               }
             </div>
             <div>
@@ -150,11 +155,10 @@ class EventNew extends Component {
                   </option>
                 )}
               </select>
-              { this.state.locationId == '0' && this.state.errors.locationInvalid
-                ? <div className='error-msg'>
-                    { this.state.errors.locationInvalid }
-                  </div>
-                : ''
+              { this.state.locationId == '0' && this.state.errors.locationInvalid &&
+                <div className='error-msg'>
+                  { this.state.errors.locationInvalid }
+                </div>
               }
             </div>
             <div
@@ -183,6 +187,7 @@ class EventNew extends Component {
                 />
               </div>
             </div>
+
             <button
               className='new-timeslot btn no-float'
               onClick={(e) => {
@@ -193,6 +198,11 @@ class EventNew extends Component {
             >
               Add New Timeslot
             </button>
+            { this.state.errors.noTimeslots &&
+              <div className='error-msg'>
+                { this.state.errors.noTimeslots }
+              </div>
+            }
             </div>
           <input
             type='submit'
@@ -202,10 +212,9 @@ class EventNew extends Component {
         </form>
         {this.state.showModal ?
           <AddTimeslot
-            authToken={this.state.authToken}
+            callback={this.queueTimeslot}
             closeModal={this.toggleModal}
             parent="new_event"
-            queueTimeslot={this.queueTimeslot}
             timeslots={this.state.timeslots}
           />
           : ''
