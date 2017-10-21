@@ -67,7 +67,6 @@ class EventsController < ApplicationController
     )
 
     timeslots = event_params[:timeslots].split(',')
-
     timeslots.each { |timeslot| Timeslot.create(
       start_time: timeslot,
       event_id: @event.id

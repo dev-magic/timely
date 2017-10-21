@@ -114,7 +114,7 @@ class Event extends Component {
             </tr>
           </thead>
           <tbody>
-            {timeslots.sort((a, b) => a.start_time - b.start_time)
+            { timeslots.sort((a, b) => a.start_time - b.start_time)
                       .map(timeslot =>
                         <Row
                           confirmModal={this.confirmModal}

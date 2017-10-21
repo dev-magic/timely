@@ -3,7 +3,7 @@ import { format, addMinutes } from 'date-fns'
 
 export const format12Hour = (hours, minutes) => {
   const period = hours >= 12 ? 'PM' : 'AM'
-  const minuteStr = String(minutes).padStart(2, '0')
+  const minuteStr = minutes < 10 ? '0' + minutes : String(minutes)
 
   return `${((hours + 11) % 12 + 1)}:${minuteStr}${period}`
 }

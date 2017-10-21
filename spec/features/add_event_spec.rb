@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Add A New Event', js: true do
 
-  let(:user) { User.new(
+  let(:user) { User.create(
                         name: "John",
                         email: "j@n.com",
                         password: "123456"

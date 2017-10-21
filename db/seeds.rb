@@ -12,6 +12,15 @@ NUM_EVENTS = 15
 TIMESLOTS_PER_EVENT = 10
 USERS_PER_EVENT = 5
 
+admin = User.new(
+  name: 'admin',
+  email: "admin@timely.com",
+  password: "123456",
+  password_confirmation: "123456"
+)
+admin.skip_confirmation!
+admin.save!
+
 NUM_USERS.times do
   User.create!(
     name: Faker::Name.unique.name,
