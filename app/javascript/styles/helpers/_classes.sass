@@ -6,13 +6,6 @@
   &:hover
     cursor: pointer
 
-.btn--confirm
-  background: $color--confirm
-  box-shadow: 2px 2px 2px $color--silver-chalice, 0 0 20px darken($color--confirm, 20%) inset
-  color: $color--mineshaft
-  text-shadow: 1px 1px lighten($color--confirm, 10%)
-  @include hover-change($color--confirm)
-
 .btn--cancel
   background: $color--warning
   box-shadow: 2px 2px 2px $color--silver-chalice, 0 0 20px darken($color--warning, 20%) inset
@@ -20,16 +13,23 @@
   text-shadow: 1px 1px lighten($color--warning, 10%)
   @include hover-change($color--warning)
 
-.modal-open
-  overflow: hidden
+.btn--confirm
+  background: $color--confirm
+  box-shadow: 2px 2px 2px $color--silver-chalice, 0 0 20px darken($color--confirm, 20%) inset
+  color: $color--mineshaft
+  text-shadow: 1px 1px lighten($color--confirm, 10%)
+  @include hover-change($color--confirm)
 
-.text--header
-  font-family: $font-family--serif
-  color: $color--graphite
-  text-shadow: 2px 2px 8px $color--silver-chalice
+.datetime
+  white-space: nowrap
 
-.warning-header
-  background: darken($color--warning, 20%)
+.error-msg
+  background: rgba($color--warning, 0.2)
+  border-radius: 5px
+  color: red
+  margin: 5px auto -10px
+  padding: 5px
+  width: fit-content
 
 .info-header
   background: $color--main
@@ -54,13 +54,17 @@
   margin: 20px
   width: 44px
 
-.error-msg
-  background: rgba($color--warning, 0.2)
-  border-radius: 5px
-  color: red
-  margin: 5px auto -10px
-  padding: 5px
-  width: fit-content
+.modal-open
+  overflow: hidden
+
+.text--header
+  font-family: $font-family--serif
+  color: $color--graphite
+  text-shadow: 2px 2px 8px $color--silver-chalice
+
+.warning-header
+  background: darken($color--warning, 20%)
+
 
 @keyframes spin
   0% { transform: rotate(0deg) }

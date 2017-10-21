@@ -21,8 +21,8 @@ export const formatTimeslot = (timeInSeconds, duration) => {
 
   return (
     <div>
-      <p>{dateString}</p>
-      <p>{`${start}-${end}`}</p>
+      <p className='datetime'>{dateString}</p>
+      <p className='datetime'>{`${start}-${end}`}</p>
     </div>
   )
 }
