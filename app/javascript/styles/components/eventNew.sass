@@ -23,13 +23,47 @@
   margin-top: -15px
   padding: 20px
 
-.new-event-fields *
-  padding: 10px
+.new-event-fields
+  align-items: center
+  display: flex
+  flex-direction: column
+  *
+    padding: 10px
 
 .new-location
   height: 150px
   padding: 8px
+  padding-bottom: 0
   transition: all .3s ease .15s
+
+.timeslots-preview
+  background: rgba($color--silver-chalice, 0.25)
+  border-radius: 10px
+  box-shadow: 0 0 5px $color--silver-chalice inset
+  display: flex
+  flex-direction: column
+  padding: 10px
+  width: 80%
+  div
+    margin-left: 30%
+    width: fit-content
+
+.timeslots-preview-header
+  padding-top: 5px
+
+.queue-new-timeslot
+  border-radius: 5px
+  box-shadow: 1px 1px 1px $color--silver-chalice
+  font-size: 1em
+  padding: 1px 8px
+
+.empty-timeslots-message
+  color: darken($color--silver-chalice, 10%)
+  text-shadow: 1px 1px #eee
+
+#new-event-submit
+  margin-top: 15px
+
 
 .hidden
   opacity: 0

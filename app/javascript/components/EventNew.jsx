@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AddTimeslot from './AddTimeslot'
+import TimeslotsPreview from './TimeslotsPreview'
 
 class EventNew extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class EventNew extends Component {
 
     this.queueTimeslot = this.queueTimeslot.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.removeTimeslot = this.removeTimeslot.bind(this)
     this.validateForm = this.validateForm.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
   }
@@ -37,6 +39,14 @@ class EventNew extends Component {
         ...this.state.timeslots,
         timeslot
       ]})
+  }
+
+  removeTimeslot(timeslot) {
+    return () => {
+      this.setState({
+        timeslots: this.state.timeslots.filter( ts => ts !== timeslot )
+      })
+    }
   }
 
   toggleModal() {
@@ -162,7 +172,7 @@ class EventNew extends Component {
               }
             </div>
             <div
-              className={`new-location ${ this.state.locationId == '0' ? '' : 'hidden'}`}
+              className={`new-location ${ this.state.locationId !== '0' && 'hidden'}`}
             >
               <div>
                 <label htmlFor='locationName'>
@@ -188,22 +198,41 @@ class EventNew extends Component {
               </div>
             </div>
 
-            <button
-              className='new-timeslot btn no-float'
-              onClick={(e) => {
-                e.preventDefault()
-                this.toggleModal()
+            <div className='timeslots-preview-header'>
+              <button
+                className='queue-new-timeslot btn'
+                onClick={(e) => {
+                  e.preventDefault()
+                  this.toggleModal()
+                  }
                 }
+              >
+                +
+              </button>
+              <label>Timeslots:</label>
+            </div>
+            <div className='timeslots-preview'>
+              { this.state.timeslots.length === 0
+                ? <span className='empty-timeslots-message'>
+                    Please Add a Timeslot
+                  </span>
+                : this.state.timeslots
+                  .sort((a, b) => new Date(a) - new Date(b))
+                  .map( (timeslot, i) =>
+                    <TimeslotsPreview
+                      key={i}
+                      timeslot={timeslot}
+                      callback={this.removeTimeslot(timeslot)}
+                    />
+                )
               }
-            >
-              Add New Timeslot
-            </button>
+            </div>
             { this.state.errors.noTimeslots &&
               <div className='error-msg'>
                 { this.state.errors.noTimeslots }
               </div>
             }
-            </div>
+          </div>
           <input
             type='submit'
             id='new-event-submit'

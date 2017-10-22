@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Row from './TimeslotRow'
 import AddTimeslot from './AddTimeslot'
 import ConfirmDelete from './ConfirmDelete'
-import { addTimeslot, getEvent, updatePreference } from '../utils/api'
+import { addTimeslot, deleteTimeslot, getEvent, updatePreference } from '../utils/api'
 
 class Event extends Component {
   constructor (props) {
@@ -18,6 +18,7 @@ class Event extends Component {
 
     this.confirmModal = this.confirmModal.bind(this)
     this.createTimeslot = this.createTimeslot.bind(this)
+    this.deleteTimeslot = this.deleteTimeslot.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
     this.refreshEvent = this.refreshEvent.bind(this)
     this.updatePreference = this.updatePreference.bind(this)
@@ -45,6 +46,17 @@ class Event extends Component {
       console.error(err)
       this.refreshEvent()
     })
+  }
+
+  deleteTimeslot() {
+    deleteTimeslot(
+      this.state.event.id,
+      this.state.confirm,
+      this.state.authToken)
+    .then(result => {
+      this.refreshEvent()
+    })
+    .catch(console.error)
   }
 
   toggleModal () {
@@ -80,11 +92,8 @@ class Event extends Component {
     const { event, users, timeslots, authToken, saving } = this.state
     const modal = this.state.confirm
       ? <ConfirmDelete
-          authToken={authToken}
           closeModal={this.toggleModal}
-          eventId={event.id}
-          refreshEvent={this.refreshEvent}
-          timeslotId={this.state.confirm}
+          callback={this.deleteTimeslot}
         />
       : <AddTimeslot
           callback={this.createTimeslot}

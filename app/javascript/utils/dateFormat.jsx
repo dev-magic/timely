@@ -34,3 +34,12 @@ export const dateToSeconds = (timeString) => {
 
   return timeInSeconds - offset
 }
+
+export const prettyString = (dateString) => {
+  // 2017-12-29T11:59
+  const parts = dateString.split('T')
+  const date = parts[0]
+  const [hours, minutes] = parts[1].split(':').map(Number)
+
+  return `${date} ${format12Hour(hours, minutes)}`
+}

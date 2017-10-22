@@ -21,7 +21,7 @@ RSpec.feature 'Add A New Event', js: true do
     fill_in "locationAddress", with: Faker::Address.street_address
     expect(page).not_to have_css ".modal__header"
 
-    click_on "Add New Timeslot"
+    click_on "+"
     expect(page).to have_css ".modal__header"
 
     fill_in "startTime", with: "2100-12-31T12:59"

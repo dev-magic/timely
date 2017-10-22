@@ -12,7 +12,7 @@ const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => 
           <i
             className='fa fa-trash fa-lg timeslot__delete-icon'
             onClick={() => confirmModal(timeslot.id)}
-          />
+          ></i>
           { formatTimeslot(timeslot.start_time, duration) }
         </div>
       </td>
