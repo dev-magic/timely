@@ -66,6 +66,14 @@ class EventsController < ApplicationController
       location_id: event_location
     )
 
+    timeslots = event_params[:timeslots].split(',')
+    timeslots.each do |timeslot|
+      Timeslot.create(
+        start_time: timeslot,
+        event_id: @event.id
+      )
+    end
+
     return redirect_to "/events/#{@event.slug}" if @event
     # TODO: handle error
     redirect_to '/events/new'
@@ -80,7 +88,8 @@ class EventsController < ApplicationController
       :locationId,
       :locationName,
       :locationAddress,
-      :authenticity_token
+      :authenticity_token,
+      :timeslots
     )
   end
 end

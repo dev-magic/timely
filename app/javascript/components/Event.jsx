@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Row from './TimeslotRow'
 import AddTimeslot from './AddTimeslot'
 import ConfirmDelete from './ConfirmDelete'
-import { getEvent, updatePreference } from '../utils/api'
+import { addTimeslot, deleteTimeslot, getEvent, updatePreference } from '../utils/api'
 
 class Event extends Component {
   constructor (props) {
@@ -12,10 +12,13 @@ class Event extends Component {
     this.state = {
       confirm: false,
       showModal: false,
+      saving: false,
       ...props
     }
 
     this.confirmModal = this.confirmModal.bind(this)
+    this.createTimeslot = this.createTimeslot.bind(this)
+    this.deleteTimeslot = this.deleteTimeslot.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
     this.refreshEvent = this.refreshEvent.bind(this)
     this.updatePreference = this.updatePreference.bind(this)
@@ -28,6 +31,32 @@ class Event extends Component {
     })
 
     document.body.classList.toggle('modal-open')
+  }
+
+  createTimeslot (startTime) {
+    this.setState({saving: true})
+
+    addTimeslot(this.state.event.id,
+                startTime,
+                this.state.authToken)
+    .then(result => {
+      this.refreshEvent()
+    })
+    .catch(err => {
+      console.error(err)
+      this.refreshEvent()
+    })
+  }
+
+  deleteTimeslot() {
+    deleteTimeslot(
+      this.state.event.id,
+      this.state.confirm,
+      this.state.authToken)
+    .then(result => {
+      this.refreshEvent()
+    })
+    .catch(console.error)
   }
 
   toggleModal () {
@@ -54,31 +83,31 @@ class Event extends Component {
   refreshEvent () {
     getEvent(this.state.event.slug)
     .then( result => {
-      this.setState({ ...result.data })
+      this.setState({ ...result.data, saving: false })
     })
     .catch(console.error)
   }
 
   render () {
-    const { event, users, timeslots, authToken } = this.state
+    const { event, users, timeslots, authToken, saving } = this.state
     const modal = this.state.confirm
       ? <ConfirmDelete
-          authToken={authToken}
           closeModal={this.toggleModal}
-          eventId={event.id}
-          refreshEvent={this.refreshEvent}
-          timeslotId={this.state.confirm}
+          callback={this.deleteTimeslot}
         />
       : <AddTimeslot
-          authToken={authToken}
+          callback={this.createTimeslot}
           closeModal={this.toggleModal}
-          eventId={event.id}
-          refreshEvent={this.refreshEvent}
           timeslots={timeslots.map(timeslot => timeslot.start_time)}
         />
 
     return (
       <div className='event-container'>
+        { saving &&
+          <div className="loader-bg">
+            <div className="loader"></div>
+          </div>
+        }
         <div className='event__header'>
           <h1 className='text--header'>{event.name}</h1>
           <h3>{event.location}</h3>
@@ -94,7 +123,7 @@ class Event extends Component {
             </tr>
           </thead>
           <tbody>
-            {timeslots.sort((a, b) => a.start_time - b.start_time)
+            { timeslots.sort((a, b) => a.start_time - b.start_time)
                       .map(timeslot =>
                         <Row
                           confirmModal={this.confirmModal}

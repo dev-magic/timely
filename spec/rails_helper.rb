@@ -52,7 +52,7 @@ RSpec.configure do |config|
     end
 
       DatabaseCleaner.clean_with(:truncation)
-    end  
+    end
 
     config.before(:each) do
       DatabaseCleaner.strategy = :transaction
@@ -61,7 +61,7 @@ RSpec.configure do |config|
     config.before(:each, type: :feature) do
       # :rack_test driver's Rack app under test shares database connection with the specs, so continue to use transaction strategy for speed.
       driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
-    
+
       if !driver_shares_db_connection_with_specs
         # Driver is probably for an external browser with an app under test that does *not* share a database connection with the specs, so use truncation strategy.
         DatabaseCleaner.strategy = :truncation
@@ -71,9 +71,9 @@ RSpec.configure do |config|
     #https://stackoverflow.com/questions/37753251/actionmailer-not-delivering-confirmation-emails-in-test-environment-rails-4
     config.before(:each, truncation: true, js: true) do |example|
       if example.example.metadata[:js]
-        Database::Cleaner.strategy = :truncation 
+        Database::Cleaner.strategy = :truncation
       else
-        Database::Cleaner.strategy = :transaction 
+        Database::Cleaner.strategy = :transaction
       end
     end
 
@@ -107,6 +107,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  
-  
+
+
 end

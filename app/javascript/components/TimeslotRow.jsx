@@ -4,6 +4,7 @@ import { formatTimeslot } from '../utils/dateFormat'
 import Preference from './Preference'
 
 const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => {
+
   return (
     <tr>
       <td>
@@ -11,11 +12,11 @@ const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => 
           <i
             className='fa fa-trash fa-lg timeslot__delete-icon'
             onClick={() => confirmModal(timeslot.id)}
-          />
-          {formatTimeslot(timeslot.start_time, duration)}
+          ></i>
+          { formatTimeslot(timeslot.start_time, duration) }
         </div>
       </td>
-      {timeslot.preferences.sort((a, b) => b.user_id - a.user_id)
+      { timeslot.preferences.sort((a, b) => b.user_id - a.user_id)
                            .map(preference =>
                              <Preference key={preference.id}
                                          id={preference.id}

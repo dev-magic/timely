@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Add A New Event', js: true do
 
-  let(:user) { User.new(
+  let(:user) { User.create(
                         name: "John",
                         email: "j@n.com",
                         password: "123456"
@@ -19,9 +19,18 @@ RSpec.feature 'Add A New Event', js: true do
     fill_in "durationMinutes", with: rand(30..300)
     fill_in "locationName", with: Faker::Address.community
     fill_in "locationAddress", with: Faker::Address.street_address
+    expect(page).not_to have_css ".modal__header"
 
-    click_on "Submit"
+    click_on "+"
+    expect(page).to have_css ".modal__header"
 
+    fill_in "startTime", with: "2100-12-31T12:59"
+    click_on "timeslot-submit"
+    expect(page).not_to have_css ".error-msg"
+    expect(page).not_to have_css ".modal__header"
+
+    click_on "new-event-submit"
+    expect(page).not_to have_css ".error-msg"
     expect(page).to have_css ".event-container"
     expect(page).to have_css ".event__header"
   end

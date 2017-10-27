@@ -3,7 +3,7 @@ import { format, addMinutes } from 'date-fns'
 
 export const format12Hour = (hours, minutes) => {
   const period = hours >= 12 ? 'PM' : 'AM'
-  const minuteStr = String(minutes).padStart(2, '0')
+  const minuteStr = minutes < 10 ? '0' + minutes : String(minutes)
 
   return `${((hours + 11) % 12 + 1)}:${minuteStr}${period}`
 }
@@ -21,8 +21,8 @@ export const formatTimeslot = (timeInSeconds, duration) => {
 
   return (
     <div>
-      <p>{dateString}</p>
-      <p>{`${start}-${end}`}</p>
+      <p className='datetime'>{dateString}</p>
+      <p className='datetime'>{`${start}-${end}`}</p>
     </div>
   )
 }
@@ -33,4 +33,13 @@ export const dateToSeconds = (timeString) => {
   const timeInSeconds = date / 1000
 
   return timeInSeconds - offset
+}
+
+export const prettyString = (dateString) => {
+  // 2017-12-29T11:59
+  const parts = dateString.split('T')
+  const date = parts[0]
+  const [hours, minutes] = parts[1].split(':').map(Number)
+
+  return `${date} ${format12Hour(hours, minutes)}`
 }
