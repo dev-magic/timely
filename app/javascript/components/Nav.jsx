@@ -82,7 +82,7 @@ class Nav extends Component {
     return (
       <nav className='navbar'>
         <div className='logo'>
-          <a href='/'>Let's Meet Up!</a>
+          <a href='/events'>Timely</a>
         </div>
         { flashMsg
         ? flashMessage
