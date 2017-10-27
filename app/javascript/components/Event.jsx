@@ -1,158 +1,55 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Row from './TimeslotRow'
-import AddTimeslot from './AddTimeslot'
-import ConfirmDelete from './ConfirmDelete'
-import { addTimeslot, deleteTimeslot, getEvent, updatePreference } from '../utils/api'
+import { formatDuration } from '../utils/dateFormat'
 
 class Event extends Component {
-  constructor (props) {
-    super(props)
 
-    this.state = {
-      confirm: false,
-      showModal: false,
-      saving: false,
-      ...props
-    }
+  render() {
+    const {
+      name,
+      duration_minutes,
+      location
+    } = this.props.event
 
-    this.confirmModal = this.confirmModal.bind(this)
-    this.createTimeslot = this.createTimeslot.bind(this)
-    this.deleteTimeslot = this.deleteTimeslot.bind(this)
-    this.toggleModal = this.toggleModal.bind(this)
-    this.refreshEvent = this.refreshEvent.bind(this)
-    this.updatePreference = this.updatePreference.bind(this)
-  }
-
-  confirmModal (timeslotId) {
-    this.setState({
-      confirm: timeslotId,
-      showModal: true
-    })
-
-    document.body.classList.toggle('modal-open')
-  }
-
-  createTimeslot (startTime) {
-    this.setState({saving: true})
-
-    addTimeslot(this.state.event.id,
-                startTime,
-                this.state.authToken)
-    .then(result => {
-      this.refreshEvent()
-    })
-    .catch(err => {
-      console.error(err)
-      this.refreshEvent()
-    })
-  }
-
-  deleteTimeslot() {
-    deleteTimeslot(
-      this.state.event.id,
-      this.state.confirm,
-      this.state.authToken)
-    .then(result => {
-      this.refreshEvent()
-    })
-    .catch(console.error)
-  }
-
-  toggleModal () {
-    this.setState({
-      confirm: false,
-      showModal: !this.state.showModal
-    })
-
-    document.body.classList.toggle('modal-open')
-  }
-
-  updatePreference (id, preferenceType) {
-    updatePreference(id, preferenceType, this.props.authToken)
-    .then(
-      // Optimistically update
-    )
-    .catch( err => {
-      console.error(err)
-      // If update fails, reset preference to value in db
-      this.refreshEvent()
-    })
-  }
-
-  refreshEvent () {
-    getEvent(this.state.event.slug)
-    .then( result => {
-      this.setState({ ...result.data, saving: false })
-    })
-    .catch(console.error)
-  }
-
-  render () {
-    const { event, users, timeslots, authToken, saving } = this.state
-    const modal = this.state.confirm
-      ? <ConfirmDelete
-          closeModal={this.toggleModal}
-          callback={this.deleteTimeslot}
-        />
-      : <AddTimeslot
-          callback={this.createTimeslot}
-          closeModal={this.toggleModal}
-          timeslots={timeslots.map(timeslot => timeslot.start_time)}
-        />
+    const { event, users } = this.props
 
     return (
-      <div className='event-container'>
-        { saving &&
-          <div className="loader-bg">
-            <div className="loader"></div>
-          </div>
-        }
-        <div className='event__header'>
-          <h1 className='text--header'>{event.name}</h1>
-          <h3>{event.location}</h3>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th />
-              {users.sort((a, b) => b.id - a.id)
-                    .map(user =>
-                      <th key={user.id} className='user'>{user.name}</th>
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            { timeslots.sort((a, b) => a.start_time - b.start_time)
-                      .map(timeslot =>
-                        <Row
-                          confirmModal={this.confirmModal}
-                          duration={event.duration_minutes}
-                          key={timeslot.id}
-                          timeslot={timeslot}
-                          users={users}
-                          updatePreference={this.updatePreference}
-                        />
+      <div className='card-container'>
+        <div className='card-body'>
+          <h1 className='event-title'>{ name } <i className='fa fa-pencil edit-event'></i></h1>
+          <div className='card-fields'>
+            <div className='event-field event-duration'>
+              <i className='fa fa-2x fa-clock-o'></i>
+              { formatDuration(duration_minutes) }
+            </div>
+            <div className='event-field'><i className='fa fa-2x fa-map-marker'></i> { location }</div>
+            <div className='event-field event-final-time'>
+              Scheduled Time: { event.time || 'TBD' }
+            </div>
+            <a href={`/events/${event.slug}?availability=edit`}>
+              <button className='fill-in-availability-button btn'>
+                Fill In Your Availability
+              </button>
+            </a>
+            <h2 className='event-attendees no-margin'>Attendees:</h2>
+            <ul className='user-list no-margin'>
+            { users.map( (user, i) =>
+              <li className='avatar' key={i}>
+                <img src='/images/user.png' alt='user pic' /> {user.name}
+              </li>
             )}
-          </tbody>
-        </table>
-        <button
-          className='new-timeslot btn'
-          onClick={this.toggleModal}
-        >
-          Add New Timeslot
-        </button>
-
-        { this.state.showModal ? modal : '' }
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }
 }
 
 Event.propTypes = {
-  authToken: PropTypes.string.isRequired,
+  authToken: PropTypes.string,
   event: PropTypes.object.isRequired,
-  timeslots: PropTypes.array.isRequired,
+  timeslots: PropTypes.array,
   users: PropTypes.array.isRequired
 }
 

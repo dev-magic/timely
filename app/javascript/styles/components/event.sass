@@ -4,7 +4,35 @@
   justify-content: center
   margin-top: 25px
 
-.user
+.edit-event
+  background: #ddd
+  border-radius: 10px
+  box-shadow: 0 0 20px #6881b1 inset
+  color: darken($color--main, 25%)
+  float: right
+  font-size: 0.7em
+  padding: 10px
+  text-shadow: 1px 1px #ddd
+  @include hover-change(#ddd)
+
+.event-attendees
+  background: lighten($color--silver-chalice, 28%)
+  padding: 10px 30px
+  font-size: 1.3em
+  margin-bottom: -25px
+  z-index: 1
+
+.event-duration
+  align-items: center
+  display: flex
+
+.event-field
+  font-size: 1.3em
+
+.event-final-time
+  margin: 15px 0
+
+.user-table-header
   padding: 10px
   width: 15%
 
@@ -59,3 +87,6 @@ td, th
 
 .preferred
   background: blue
+
+.fa-2x
+  font-size: 2em
