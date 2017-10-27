@@ -33,7 +33,13 @@ class EventsController < ApplicationController
     }
 
     respond_to do |format|
-      format.html { render react_component: 'Event', props: props }
+      if params[:availability]
+        format.html do
+          render react_component: 'EventAvailability', props: props
+        end
+      else
+        format.html { render react_component: 'Event', props: props }
+      end
       format.json { render json: props }
     end
   end
@@ -89,7 +95,8 @@ class EventsController < ApplicationController
       :locationName,
       :locationAddress,
       :authenticity_token,
-      :timeslots
+      :timeslots,
+      :availability
     )
   end
 end

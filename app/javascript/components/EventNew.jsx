@@ -94,11 +94,11 @@ class EventNew extends Component {
 
   render() {
     return (
-      <div className='new-event-container'>
+      <div className='card-container'>
         <form
           method='POST'
           action='/events'
-          className='new-event-form'
+          className='card-body'
           onSubmit={ this.validateForm }
           noValidate
         >
@@ -112,8 +112,8 @@ class EventNew extends Component {
             name='timeslots'
             value={ this.state.timeslots }
           />
-          <h1 className='new-event-title'>Create a New Event</h1>
-          <div className='new-event-fields'>
+          <h1 className='card-title'>Create a New Event</h1>
+          <div className='card-fields'>
             <div>
               <label htmlFor='name'>
                 Event Name:
@@ -235,7 +235,7 @@ class EventNew extends Component {
           </div>
           <input
             type='submit'
-            id='new-event-submit'
+            id='card-submit'
             className='btn btn--confirm'
             value='Submit'
           />

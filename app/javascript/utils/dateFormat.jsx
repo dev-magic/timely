@@ -43,3 +43,16 @@ export const prettyString = (dateString) => {
 
   return `${date} ${format12Hour(hours, minutes)}`
 }
+
+export const formatDuration = (totalMinutes) => {
+  const hours = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+  let hourString = ''
+  let minuteString = ''
+
+  if (hours) hourString = hours > 1 ? `${hours} hrs` : '1 hr'
+
+  if (minutes) minuteString = minutes + ' min'
+
+  return `${hourString} ${minuteString}`
+}

@@ -29,10 +29,10 @@ RSpec.feature 'Add A New Event', js: true do
     expect(page).not_to have_css ".error-msg"
     expect(page).not_to have_css ".modal__header"
 
-    click_on "new-event-submit"
+    click_on "card-submit"
     expect(page).not_to have_css ".error-msg"
-    expect(page).to have_css ".event-container"
-    expect(page).to have_css ".event__header"
+    expect(page).to have_css ".card-container"
+    expect(page).to have_css ".event-title"
   end
 
   scenario "users can not add a new event" do
