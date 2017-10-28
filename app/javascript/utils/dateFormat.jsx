@@ -36,6 +36,10 @@ export const dateToSeconds = (timeString) => {
 }
 
 export const prettyString = (dateString) => {
+  if (dateString.match(/Z/)) {
+    dateString = dateString.slice(0, -8)
+  }
+
   // 2017-12-29T11:59
   const parts = dateString.split('T')
   const date = parts[0]

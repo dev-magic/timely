@@ -20,6 +20,14 @@ class Event < ApplicationRecord
     end
   end
 
+def add_best_timeslot
+  ranked_timeslots = calculate_timeslot_ranking
+  best_timeslot = ranked_timeslots.select { |ts| ts.rank == 1 }
+
+  define_singleton_method(:best_timeslot) { best_timeslot[0].start_time }
+
+  self
+end
 
   def calculate_timeslot_ranking
     timeslots_with_score = self.timeslots.map do |timeslot|
