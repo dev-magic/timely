@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
       @auth_token ||= form_authenticity_token
       @current_user = current_user
     else
-      @flash_message = 'Please sign in first'
+      @flash_message = 'Please sign in first' unless request.path == '/'
       render :landing
     end
   end
