@@ -4,13 +4,13 @@ class UserMailer < Devise::Mailer
   default template_path: 'devise/mailer'
 
   # placeholder email
-  default from: 'no-reply@letsmeetup.com'
+  default from: 'no-reply@timely.com'
 
   def confirmation_instructions(record, token, opts = {})
     image = File.read(Rails.root.join('public', 'images', 'norris_email.jpg'))
     attachments.inline['norris_email.jpg'] = image
     headers['Custom-header'] = 'Welcome to our site'
-    opts[:from] = 'no-reply@letsmeetup.com'
+    opts[:from] = 'no-reply@timely.com'
     super
   end
 end
