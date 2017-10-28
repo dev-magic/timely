@@ -1,5 +1,5 @@
 class TimeslotSerializer < ActiveModel::Serializer
-  attributes :id, :start_time
+  attributes :id, :start_time, :rank
   has_many :preferences
 
   def start_time

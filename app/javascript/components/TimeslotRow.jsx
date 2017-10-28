@@ -4,6 +4,16 @@ import { formatTimeslot } from '../utils/dateFormat'
 import Preference from './Preference'
 
 const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => {
+  let rankColor = 'gold'
+  let tooltipText = <div>Best<br/>Timeslot</div>
+
+  if (timeslot.rank === 2) {
+    rankColor = 'silver'
+    tooltipText = '2nd Best Timeslot'
+  } else if (timeslot.rank === 3) {
+    rankColor = 'bronze'
+    tooltipText = '3rd Best Timeslot'
+  }
 
   return (
     <tr>
@@ -14,16 +24,26 @@ const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => 
             onClick={() => confirmModal(timeslot.id)}
           ></i>
           { formatTimeslot(timeslot.start_time, duration) }
+
+          <div className='spacer'></div>
+          { timeslot.rank &&
+            <div>
+              <div className='tooltip'>
+                <span className='tooltip-text'>{ tooltipText }</span>
+              <i className={`fa fa-trophy fa-2x ${rankColor}`}></i>
+              </div>
+            </div>
+          }
         </div>
       </td>
       { timeslot.preferences.sort((a, b) => b.user_id - a.user_id)
-                           .map(preference =>
-                             <Preference key={preference.id}
-                                         id={preference.id}
-                                         preferenceType={preference.preference_type}
-                                         updatePreference={updatePreference}
-                             />
-      )}
+                            .map(preference =>
+                              <Preference key={preference.id}
+                                          id={preference.id}
+                                          preferenceType={preference.preference_type}
+                                          updatePreference={updatePreference}
+                              />)
+      }
     </tr>
   )
 }
