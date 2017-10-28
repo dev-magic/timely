@@ -10,7 +10,7 @@ class EventsController < ApplicationController
 
   def index
     events = Event.includes(:location)
-    events_json = JSONResource.new(events).as_json
+    events_json = JSONResource.new(events.map(&:add_best_timeslot)).as_json
     render react_component: 'Events',
            props: {
              events: events_json,
