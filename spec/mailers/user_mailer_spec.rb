@@ -10,7 +10,7 @@ RSpec.describe UserMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq 'Confirmation instructions'
       expect(mail.to).to eq [user.email]
-      expect(mail.from).to eq ['no-reply@letsmeetup.com'] 
+      expect(mail.from).to eq ['no-reply@timely.com'] 
     end
 
     it 'renders the body' do

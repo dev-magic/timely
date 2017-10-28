@@ -1,10 +1,10 @@
-# Let's Meet Up!
+# Timely
 
 ## Running Locally:
 
-`git clone https://github.com/dev-magic/letsmeetup.git`
+`git clone https://github.com/dev-magic/timely.git`
 
-`cd letsmeetup`
+`cd timely`
 
 `bundle && yarn`
 
