@@ -19,4 +19,40 @@ class Event < ApplicationRecord
       )
     end
   end
+
+
+  def calculate_timeslot_ranking
+    timeslots_with_score = self.timeslots.map do |timeslot|
+      score = timeslot.preferences.reduce(0) do |sum, pref|
+        case pref.preference_type
+        when 'tentative'
+          sum += 1
+        when 'available'
+          sum += 2
+        when 'preferred'
+          sum += 3
+        when 'not_available'
+          sum -= 100
+        else
+          # do nothing
+        end
+        sum
+      end
+
+      timeslot.define_singleton_method(:score) { score }
+      timeslot
+    end
+
+    timeslots_with_score.sort do |a, b|
+      b.score <=> a.score
+    end.each_with_index.map do |timeslot, i|
+      if i < 3
+        ranking = 1 + i
+        timeslot.define_singleton_method(:rank) { ranking }
+      else
+        timeslot.define_singleton_method(:rank) { nil }
+      end
+      timeslot
+    end
+  end
 end
