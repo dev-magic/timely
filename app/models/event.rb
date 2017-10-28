@@ -40,7 +40,7 @@ class Event < ApplicationRecord
   def add_score_to_timeslot(timeslots)
     timeslots.map do |timeslot|
       score = timeslot.preferences.reduce(0) do |sum, pref|
-        sum += preference_score pref.preference_type
+        sum + preference_score(pref.preference_type)
       end
 
       timeslot.define_singleton_method(:score) { score }
