@@ -30,7 +30,7 @@ const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => 
             <div>
               <div className='tooltip'>
                 <span className='tooltip-text'>{ tooltipText }</span>
-              <i className={`fa fa-trophy fa-2x ${rankColor}`}></i>
+                <i className={`fa fa-trophy fa-2x ${rankColor}`}></i>
               </div>
             </div>
           }

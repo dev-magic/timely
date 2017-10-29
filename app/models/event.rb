@@ -20,21 +20,14 @@ class Event < ApplicationRecord
     end
   end
 
-  def add_best_timeslot
-    ranked_timeslots = calculate_timeslot_ranking
-    best_timeslot = ranked_timeslots.select { |ts| ts.rank == 1 }
+  def timeslots_with_ranking
+    timeslots_with_score = add_score_to_timeslot(timeslots)
 
-    define_singleton_method(:best_timeslot) { best_timeslot[0].start_time }
+    sorted_timeslots = timeslots_with_score.sort do |a, b|
+      b.score <=> a.score
+    end
 
-    self
-  end
-
-  def preference_score(preference)
-    return 1 if preference == 'tentative'
-    return 2 if preference == 'available'
-    return 3 if preference == 'preferred'
-    return -100 if preference == 'not_available'
-    0
+    add_rank_to_timeslots sorted_timeslots
   end
 
   def add_score_to_timeslot(timeslots)
@@ -59,13 +52,20 @@ class Event < ApplicationRecord
     end
   end
 
-  def calculate_timeslot_ranking
-    timeslots_with_score = add_score_to_timeslot(timeslots)
+  def preference_score(preference)
+    return 1 if preference == 'tentative'
+    return 2 if preference == 'available'
+    return 3 if preference == 'preferred'
+    return -100 if preference == 'not_available'
+    0
+  end
 
-    sorted_timeslots = timeslots_with_score.sort do |a, b|
-      b.score <=> a.score
-    end
+  def add_best_timeslot
+    ranked_timeslots = timeslots_with_ranking
+    best_timeslot = ranked_timeslots.select { |ts| ts.rank == 1 }
 
-    add_rank_to_timeslots sorted_timeslots
+    define_singleton_method(:best_timeslot) { best_timeslot[0].start_time }
+
+    self
   end
 end

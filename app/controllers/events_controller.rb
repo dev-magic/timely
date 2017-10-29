@@ -22,7 +22,7 @@ class EventsController < ApplicationController
     event = Event.includes(:users, timeslots: [{ preferences: :user }])
                  .find_by_slug(params[:id])
     event_json = JSONResource.new(event, serializer: EventShowSerializer).as_json
-    timeslots_json = JSONResource.new(event.calculate_timeslot_ranking).as_json
+    timeslots_json = JSONResource.new(event.timeslots_with_ranking).as_json
     users_json = JSONResource.new(event.users).as_json
 
     props = {
