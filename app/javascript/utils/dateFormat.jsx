@@ -11,9 +11,9 @@ export const format12Hour = (hours, minutes) => {
 export const formatTimeslot = (timeInSeconds, duration) => {
   const dateObject = new Date(timeInSeconds * 1000)
   const dateString = format(dateObject, ['YYYY-MM-DD'])
-  const hours = dateObject.getUTCHours()
-  const minutes = dateObject.getUTCMinutes()
-  const start = format12Hour(hours, minutes)
+  const startHours = dateObject.getUTCHours()
+  const startMinutes = dateObject.getUTCMinutes()
+  const start = format12Hour(startHours, startMinutes)
   const endTime = addMinutes(dateObject, duration)
   const endHours = endTime.getUTCHours()
   const endMinutes = endTime.getUTCMinutes()
@@ -36,6 +36,7 @@ export const dateToSeconds = (timeString) => {
 }
 
 export const prettyString = (dateString) => {
+  // 2017-12-29T11:59:00.000Z
   if (dateString.match(/Z/)) {
     dateString = dateString.slice(0, -8)
   }
