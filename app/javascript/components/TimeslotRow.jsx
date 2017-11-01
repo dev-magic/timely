@@ -4,15 +4,22 @@ import { formatTimeslot } from '../utils/dateFormat'
 import Preference from './Preference'
 
 const TimeSlotRow = ({ timeslot, duration, confirmModal, updatePreference }) => {
-  let rankColor = 'gold'
-  let tooltipText = <div>Best<br/>Timeslot</div>
+  let rankColor
+  let tooltipText
 
-  if (timeslot.rank === 2) {
-    rankColor = 'silver'
-    tooltipText = '2nd Best Timeslot'
-  } else if (timeslot.rank === 3) {
-    rankColor = 'bronze'
-    tooltipText = '3rd Best Timeslot'
+  switch (timeslot.rank) {
+    case 1:
+      rankColor = 'gold'
+      tooltipText = <div>Best<br/>Timeslot</div>
+      break
+    case 2:
+      rankColor = 'silver'
+      tooltipText = '2nd Best Timeslot'
+      break
+    case 3:
+      rankColor = 'bronze'
+      tooltipText = '3rd Best Timeslot'
+      break
   }
 
   return (

@@ -37,7 +37,6 @@ class Event < ApplicationRecord
       end
 
       timeslot.define_singleton_method(:score) { score }
-      timeslot.define_singleton_method(:rank) { nil }
       timeslot
     end
   end
@@ -53,11 +52,13 @@ class Event < ApplicationRecord
   end
 
   def preference_score(preference)
-    return 1 if preference == 'tentative'
-    return 2 if preference == 'available'
-    return 3 if preference == 'preferred'
-    return -100 if preference == 'not_available'
-    0
+    case preference
+    when 'tentative' then 1
+    when 'available' then 2
+    when 'preferred' then 3
+    when 'not_available' then -100
+    else 0
+    end
   end
 
   def add_best_timeslot
