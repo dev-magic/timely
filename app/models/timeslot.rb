@@ -17,6 +17,5 @@ class Timeslot < ApplicationRecord
     end
   end
 
-  def rank
-  end
+  def rank; end
 end
