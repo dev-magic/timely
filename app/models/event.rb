@@ -23,7 +23,7 @@ class Event < ApplicationRecord
   def best_timeslot
     ranked_timeslots = timeslots_with_ranking
 
-    return nil if timeslots_with_ranking.all? { |ts| ts.score == 0 }
+    return nil if timeslots_with_ranking.all? { |ts| ts.score.zero? }
 
     best_timeslot = ranked_timeslots.select { |ts| ts.rank == 1 }
     best_timeslot[0].start_time
@@ -51,7 +51,7 @@ class Event < ApplicationRecord
   end
 
   def add_rank_to_timeslots(timeslot_array)
-    return timeslot_array if timeslot_array.all? { |ts| ts.score == 0 }
+    return timeslot_array if timeslot_array.all? { |ts| ts.score.zero? }
 
     timeslot_array.each_with_index.map do |timeslot, i|
       if i < 3
