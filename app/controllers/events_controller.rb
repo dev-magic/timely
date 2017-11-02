@@ -10,8 +10,7 @@ class EventsController < ApplicationController
 
   def index
     events = Event.includes(:location, timeslots: :preferences)
-    events_json = JSONResource.new(events,
-                                   each_serializer: EventWithBestTimeslotSerializer)
+    events_json = JSONResource.new(events)
     render react_component: 'Events',
            props: {
              events: events_json,

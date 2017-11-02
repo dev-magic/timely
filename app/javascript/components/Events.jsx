@@ -20,7 +20,6 @@ const Events = ({events}) =>
           <p>{event.location}</p>
           <p>Current Best Timeslot:</p>
           <span className='events__time'>
-            { /* TODO: make Event.add_best_timeslot return nil if no preferences have been set */ }
             { event.best_timeslot ? prettyString(event.best_timeslot) : 'TBD' }
           </span>
         </a>

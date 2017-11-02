@@ -1,5 +1,5 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :name, :location, :slug
+  attributes :id, :name, :location, :slug, :best_timeslot
 
   def location
     object.location.name
