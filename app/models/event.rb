@@ -20,6 +20,12 @@ class Event < ApplicationRecord
     end
   end
 
+  def best_timeslot
+    ranked_timeslots = timeslots_with_ranking
+    best_timeslot = ranked_timeslots.select { |ts| ts.rank == 1 }
+    best_timeslot[0].start_time
+  end
+
   def timeslots_with_ranking
     timeslots_with_score = add_score_to_timeslot(timeslots)
 
@@ -59,14 +65,5 @@ class Event < ApplicationRecord
     when 'not_available' then -100
     else 0
     end
-  end
-
-  def add_best_timeslot
-    ranked_timeslots = timeslots_with_ranking
-    best_timeslot = ranked_timeslots.select { |ts| ts.rank == 1 }
-
-    define_singleton_method(:best_timeslot) { best_timeslot[0].start_time }
-
-    self
   end
 end
