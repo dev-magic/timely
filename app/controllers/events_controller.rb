@@ -9,8 +9,9 @@ class EventsController < ApplicationController
   end
 
   def index
-    events = Event.includes(:location)
-    events_json = JSONResource.new(events.map(&:add_best_timeslot)).as_json
+    events = Event.includes(:location, timeslots: :preferences)
+    events_json = JSONResource.new(events,
+                                   each_serializer: EventWithBestTimeslotSerializer)
     render react_component: 'Events',
            props: {
              events: events_json,
@@ -21,9 +22,9 @@ class EventsController < ApplicationController
   def show
     event = Event.includes(:users, timeslots: [{ preferences: :user }])
                  .find_by_slug(params[:id])
-    event_json = JSONResource.new(event, serializer: EventShowSerializer).as_json
-    timeslots_json = JSONResource.new(event.timeslots_with_ranking).as_json
-    users_json = JSONResource.new(event.users).as_json
+    event_json = JSONResource.new(event, serializer: EventShowSerializer)
+    timeslots_json = JSONResource.new(event.timeslots_with_ranking)
+    users_json = JSONResource.new(event.users)
 
     props = {
       event: event_json,
