@@ -70,10 +70,15 @@ class Nav extends Component {
             name='authenticity_token'
             value={ authToken }
           />
+          <a href={"/users/edit"}>
+            <button className='btn'>
+              Edit my account
+            </button>
+          </a>
           <input
             type='submit'
             value='Sign Out'
-            className='signout'
+            className='btn btn--cancel'
           />
         </form>
       </div>
