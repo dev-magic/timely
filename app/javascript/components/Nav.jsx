@@ -70,10 +70,15 @@ class Nav extends Component {
             name='authenticity_token'
             value={ authToken }
           />
+          <a href={"/users/edit"}>
+            <button className='btn'>
+              Edit my account
+            </button>
+          </a>
           <input
             type='submit'
             value='Sign Out'
-            className='signout'
+            className='btn btn--cancel'
           />
         </form>
       </div>
@@ -82,11 +87,7 @@ class Nav extends Component {
     return (
       <nav className='navbar'>
         <div className='logo'>
-<<<<<<< HEAD
           <a href='/events'>Timely</a>
-=======
-          <a href='/events'>Let's Meet Up!</a>
->>>>>>> a14aa39... Style Devise forms, #50
         </div>
         { flashMsg
         ? flashMessage

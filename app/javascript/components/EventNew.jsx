@@ -94,19 +94,11 @@ class EventNew extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
       <div className='card-container'>
         <form
           method='POST'
           action='/events'
           className='card-body'
-=======
-      <div className='form-container'>
-        <form
-          method='POST'
-          action='/events'
-          className='form'
->>>>>>> a14aa39... Style Devise forms, #50
           onSubmit={ this.validateForm }
           noValidate
         >
@@ -115,7 +107,6 @@ class EventNew extends Component {
             name='authenticity_token'
             value={ this.props.authToken }
           />
-<<<<<<< HEAD
           <input
             type='hidden'
             name='timeslots'
@@ -123,10 +114,6 @@ class EventNew extends Component {
           />
           <h1 className='card-title'>Create a New Event</h1>
           <div className='card-fields'>
-=======
-          <h1 className='form-title'>Create a New Event</h1>
-          <div className='form-fields'>
->>>>>>> a14aa39... Style Devise forms, #50
             <div>
               <label htmlFor='name'>
                 Event Name:

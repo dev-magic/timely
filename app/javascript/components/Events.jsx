@@ -16,8 +16,14 @@ const Events = ({events}) =>
           className='event-card'
         >
           <h2 className='event-title'>{event.name}</h2>
-          <p>{event.location}</p>
-          <p>Time: <span className='events__time'>{event.time ? event.time : 'TBD'}</span></p>
+          <div className='event-field'>
+            <i className='fa fa-2x fa-map-marker'></i>
+            { event.location }
+          </div>
+          <div className='event-final-time'>
+            <i className='fa fa-2x fa-clock-o'></i>
+             { event.time || 'TBD' }
+          </div>
         </a>
       )}
     </div>
