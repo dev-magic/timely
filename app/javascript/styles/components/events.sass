@@ -12,17 +12,33 @@
   @include hover-change($color--hilite)
 
 .events-container
-  align-items: center
   display: flex
-  flex-direction: column
+  flex-wrap: wrap
+  width: 80%
+  margin: auto
+  justify-content: space-around
 
 .event-card
   background: rgba($color--silver-chalice, 0.2)
   border-radius: 5px
   color: $color--mineshaft
-  min-width: 800px
+  width: fit-content
   margin: 25px
   padding: 0 0 15px
+
+.event-card-body
+  width: 75%
+  min-width: 325px
+  padding-left: 30%
+
+.event-card-info
+  text-align: left
+
+.event-card-map
+  padding: 0 20px 0 7px
+
+.event-card-clock
+  padding-right: 16px
 
 .event-title
   background: rgba($color--main, 0.8)
